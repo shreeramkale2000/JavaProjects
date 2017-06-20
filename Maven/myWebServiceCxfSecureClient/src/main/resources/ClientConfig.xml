@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:cxf="http://cxf.apache.org/core" 
+	xmlns:sec="http://cxf.apache.org/configuration/security" 
+	xmlns:http="http://cxf.apache.org/transports/http/configuration" 
+	xsi:schemaLocation="
+			http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+			http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+			http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean name="service" class="org.ritvik.wsdl.calculator.CalculatorService">
+		<constructor-arg value="CalculatorService.wsdl" />
+	</bean>
+	
+	<bean name="addRequest" class="org.ritvik.wsdl.calculator.AddRequestType" >
+		<property name="argOne" value="1" />
+		<property name="argTwo" value="2" />
+	</bean>
+	
+	<jaxws:client name="{http://ritvik.org/wsdl/calculator}CalculatorServicePort" createdFromAPI="true"
+		address="http://localhost:8080/myWebServiceCxfSecure/CxfServices/CalculatorService" >
+		
+		<jaxws:properties>
+			<entry key="ws-security.username" value="ITEF000004" />
+			<entry key="ws-security.callback-handler" value="org.ritvik.cxf.common.SecWsPasswordCallback" />
+			<entry key="ws-security.encryption.properties" value="properties/Client_Encrypt.properties" />
+			<entry key="ws-security.signature.properties" value="properties/Client_Sign.properties" />
+		</jaxws:properties>
+		
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+		
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+		</jaxws:inInterceptors>
+		
+		<jaxws:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+		</jaxws:outInterceptors>
+		
+	</jaxws:client>
+	
+	<!-- Settings to Disable Host Name Validation in https endpoints -->
+	<http:conduit name="{http://ritvik.org/wsdl/calculator}CalculatorServicePort.http-conduit">
+		<http:tlsClientParameters disableCNCheck="true" />
+	</http:conduit>
+</beans>

@@ -1,0 +1,493 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ritvik.webapp</groupId>
+	<artifactId>myWebApp</artifactId>
+	<packaging>war</packaging>
+	<version>1.0</version>
+	<name>Maven Webapp</name>
+	<description>Sample Maven Webapp with Jsp Servlet</description>
+
+	<contributors>
+		<contributor>
+			<name>Ritvik Jain</name>
+		</contributor>
+	</contributors>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+		<derbyclient.version>10.13.1.1</derbyclient.version>
+		<log4j.version>1.2.17</log4j.version>
+		<spring.version>4.3.7.RELEASE</spring.version>
+		<aspectjweaver.version>1.8.10</aspectjweaver.version>
+		<aopalliance.version>1.0</aopalliance.version>
+		<cglib.version>3.2.5</cglib.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>${derbyclient.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectjweaver.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+			<version>${aopalliance.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib.version}</version>
+			<!-- Not Required. Already Included in Spring Core Library -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.ow2.asm</groupId>
+					<artifactId>asm</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+	</dependencies>
+
+	<!-- maven help:effective-pom -->
+	<build>
+		<finalName>myWebApp</finalName>
+
+		<plugins>
+
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+
+				<executions>
+					<execution>
+						<id>default-clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+
+				<executions>
+					<execution>
+						<id>default-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+
+				<executions>
+					<execution>
+						<id>default-compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+
+						<configuration>
+							<source>${java.version}</source>
+							<target>${java.version}</target>
+						</configuration>
+
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>default-war</id>
+						<phase>package</phase>
+
+						<goals>
+							<goal>war</goal>
+						</goals>
+
+						<configuration>
+							<archive>
+								<manifest>
+									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+
+				<executions>
+					<execution>
+						<id>default-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+
+						<configuration>
+							<skipTests>true</skipTests>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>default-install</id>
+						<phase>install</phase>
+						<goals>
+							<goal>install</goal>
+						</goals>
+
+						<configuration>
+							<createChecksum>true</createChecksum>
+							<skip>true</skip>
+						</configuration>
+
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.3</version>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+
+		<profile>
+			<id>RunAppJetty</id>
+
+			<build>
+				<defaultGoal>clean package</defaultGoal>
+
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>9.2.11.v20150529</version>
+
+						<executions>
+							<execution>
+								<id>run-jetty</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run-war</goal>
+								</goals>
+
+								<configuration>
+									<war>${project.build.directory}/${project.build.finalName}.war</war>
+									<webApp>
+										<contextPath>/myWebApp</contextPath>
+									</webApp>
+									<httpConnector>
+										<port>8081</port>
+									</httpConnector>
+									<scanIntervalSeconds>10</scanIntervalSeconds>
+								</configuration>
+							</execution>
+						</executions>
+
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+
+		<profile>
+			<id>StartJboss</id>
+
+			<build>
+				<defaultGoal>clean install</defaultGoal>
+
+				<plugins>
+					
+					<plugin>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.8</version>
+
+						<executions>
+							<execution>
+								<id>custom-copy-dependencies</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-dependencies</goal>
+								</goals>
+								<configuration>
+									<includeArtifactIds>derbyclient</includeArtifactIds>
+									<outputDirectory>${project.build.directory}/databaseDriver</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<version>1.1.0.Final</version>
+
+						<executions>
+
+							<execution>
+								<id>jboss-start</id>
+								<phase>install</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+
+								<configuration>
+									<!-- The JBoss Application Server's home directory. If not used, JBoss Application Server will be downloaded to target -->
+									<!--<jbossHome></jbossHome>-->
+									
+									<!-- Settings for Jboss Download from Dist -->
+									<groupId>org.wildfly</groupId>
+									<artifactId>wildfly-dist</artifactId>
+									<version>10.1.0.Final</version>
+									
+									<server-type>STANDALONE</server-type>
+									<serverConfig>standalone-full.xml</serverConfig>
+									<server-args>
+										<server-arg>-b=localhost</server-arg>
+									</server-args>
+									<add-user>
+										<users>
+											<user>
+												<username>admin</username>
+												<password>password</password>
+												<realm>ManagementRealm</realm>
+											</user>
+										</users>
+									</add-user>
+									<startupTimeout>300</startupTimeout>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>jboss-cli-commands</id>
+								<phase>install</phase>
+								<goals>
+									<goal>execute-commands</goal>
+								</goals>
+
+								<configuration>
+									<!-- If Using Separate Downloaded Jboss, Configure Here. Same as Defined in Jboss Start -->
+									<jbossHome>${project.build.directory}/wildfly-run/wildfly-10.1.0.Final</jbossHome>
+									
+									<commands>
+										<command>module add --name=org.apache.derby
+											--resources=${project.build.directory}/databaseDriver/derbyclient-${derbyclient.version}.jar 
+											--dependencies=javax.api</command>
+										<command>/subsystem=datasources
+											/jdbc-driver=derby-network:add(driver-name=derby-network,
+											driver-module-name=org.apache.derby,
+											driver-class-name=org.apache.derby.jdbc.ClientDriver)</command>
+										<command>data-source add --name=DerbyDS --driver-name=derby-network
+											--connection-url=jdbc:derby://localhost:1527/ritvik_db;create=true
+											--jndi-name=java:/DerbyDS --user-name=app --password=app
+											--track-statements=true</command>
+									</commands>
+									<failOnError>false</failOnError>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>jboss-deploy</id>
+								<phase>install</phase>
+								<goals>
+									<goal>deploy-only</goal>
+								</goals>
+							</execution>
+
+						</executions>
+
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+
+		<profile>
+			<id>ShutdownJboss</id>
+
+			<build>
+				<defaultGoal>validate</defaultGoal>
+
+				<plugins>
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<version>1.1.0.Final</version>
+
+						<executions>
+
+							<execution>
+								<id>jboss-shutdown</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>shutdown</goal>
+								</goals>
+							</execution>
+
+						</executions>
+
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+
+		<profile>
+			<id>BuildAppForDev</id>
+
+			<build>
+				<defaultGoal>install</defaultGoal>
+
+				<plugins>
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<version>1.1.0.Final</version>
+
+						<executions>
+							<execution>
+								<id>jboss-deploy</id>
+								<phase>install</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+
+						<configuration>
+							<hostname>localhost</hostname>
+							<port>9990</port>
+							<username>admin</username>
+							<password>password</password>
+						</configuration>
+
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>BuildAppForUAT</id>
+			<build>
+				<defaultGoal>clean package</defaultGoal>
+
+				<resources>
+					<resource>
+						<directory>${basedir}/src/main/resources</directory>
+					</resource>
+					<resource>
+						<directory>${basedir}/src/main/resources_uat</directory>
+					</resource>
+				</resources>
+
+				<plugins>
+
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+
+						<executions>
+							<execution>
+								<id>default-resources</id>
+
+								<configuration>
+									<overwrite>true</overwrite>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+</project>

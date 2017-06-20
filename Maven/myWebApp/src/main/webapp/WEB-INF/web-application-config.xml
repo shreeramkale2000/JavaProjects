@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+			
+	<context:component-scan base-package="org.ritvik" scoped-proxy="no" />
+	
+	<context:annotation-config />
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations" >
+			<list>
+				<value>classpath:Application.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" />
+	
+	<aop:config>
+		<aop:pointcut id="saveOperation" expression="execution(* *..*Dao*..*(..))" />
+		<aop:advisor pointcut-ref="saveOperation" advice-ref="txAdvice" />
+	</aop:config>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="post*" />
+			<tx:method name="delete*" />
+			<tx:method name="put*" />
+			<tx:method name="get*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean>
+    
+    <bean id="stackTraceWriter" class="java.io.StringWriter" />
+    
+    <bean name="/TestController" class="org.ritvik.TestController" />
+	
+</beans>

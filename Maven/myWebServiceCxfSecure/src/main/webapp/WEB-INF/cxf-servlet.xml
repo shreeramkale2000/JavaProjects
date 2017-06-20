@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+			
+	<context:component-scan base-package="org.ritvik.cxf" scoped-proxy="no" />
+	
+	<context:annotation-config />
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations" >
+			<list>
+				<value>classpath:properties/Application.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" />
+	
+	<aop:config>
+		<aop:pointcut id="saveOperation" expression="execution(* *..*Dao*..*(..))" />
+		<aop:advisor pointcut-ref="saveOperation" advice-ref="txAdvice" />
+	</aop:config>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="post*" />
+			<tx:method name="delete*" />
+			<tx:method name="put*" />
+			<tx:method name="get*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource" />
+        <!--<property name="exceptionTranslator" ref="customJdbcSQLErrorCodesTranslator" />-->
+    </bean>
+	
+	<bean id="secWsPasswordCallback" class="org.ritvik.cxf.common.SecWsPasswordCallback">
+		<property name="passwords">
+			<map>
+				<entry key="${service.user}" value="${service.password}" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="stackTraceWriter" class="java.io.StringWriter" />
+	
+	<bean id="addResponse" class="org.ritvik.wsdl.calculator.CalResponseType" scope="prototype" >
+		<property name="respCode" value="${default.error.code}" />
+		<property name="respMsg" value="${default.error.desc}" />
+	</bean>
+
+	<jaxws:endpoint xmlns:cal="http://ritvik.org/wsdl/calculator"
+		id="cxfService" address="/CalculatorService" serviceName="cal:CalculatorService"
+		endpointName="cal:CalculatorServicePort" implementor="org.ritvik.cxf.service.CxfService"
+		wsdlLocation="WEB-INF/wsdl/CalculatorService.wsdl">
+
+		<jaxws:properties>
+			<entry key="schema-validation-enabled" value="true" />
+			<entry key="ws-security.callback-handler" value-ref="secWsPasswordCallback" />
+			
+			<!-- Enabling Decryption Request -->
+			<entry key="ws-security.signature.properties" value="properties/Server_Crypto.properties" />
+			
+			<!-- Enabling Encryption Response -->
+			<entry key="ws-security.encryption.properties" value="properties/Server_Crypto.properties" />
+			<entry key="ws-security.encryption.username" value="useReqSigCert"/>
+		</jaxws:properties>
+		
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+		
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+		</jaxws:inInterceptors>
+		
+		<jaxws:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+		</jaxws:outInterceptors>
+		
+	</jaxws:endpoint>
+	
+	<bean name="parasoftService" class="com.parasoft.wsdl.calculator.Calculator">
+		<constructor-arg value="classpath:CalculatorParasoft.wsdl" />
+	</bean>
+	
+	<!--<bean id="addRequestParasoft" class="com.parasoft.wsdl.calculator.Add" scope="prototype" />-->
+	
+	<jaxws:client name="{http://www.parasoft.com/wsdl/calculator/}ICalculator" createdFromAPI="true"
+		address="http://ws1.parasoft.com/glue/calculator" >
+		
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+		
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+		</jaxws:inInterceptors>
+		
+		<jaxws:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+		</jaxws:outInterceptors>
+		
+	</jaxws:client>
+</beans>

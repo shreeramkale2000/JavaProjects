@@ -1,0 +1,169 @@
+<wsdl:definitions name="CalculatorService" targetNamespace="http://ritvik.org/wsdl/calculator" xmlns:tns="http://ritvik.org/wsdl/calculator" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" >
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://ritvik.org/wsdl/calculator" >
+
+			<!--Default Standards -->
+			<xsd:complexType name="standardType">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="1" name="service_user" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="service_password" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="consumer_name" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="unique_id" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="time_stamp" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="fillersType">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="1" name="filler1" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="filler2" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="filler3" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="filler4" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="filler5" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<!--Default Standards -->
+
+			<xsd:complexType name="calResponseType">
+				<xsd:sequence>
+					<xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:float"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="respCode" type="xsd:string"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="respMsg" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" maxOccurs="1" name="soaFillers" type="tns:fillersType" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="addRequestType">
+				<xsd:sequence>
+					<xsd:element minOccurs="1" maxOccurs="1" name="argOne" type="xsd:float"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="argTwo" type="xsd:float"/>
+					
+					<xsd:element minOccurs="0" maxOccurs="1" name="standard" type="tns:standardType" />
+					<xsd:element minOccurs="0" maxOccurs="1" name="fillers" type="tns:fillersType" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:element name="addRequest" type="tns:addRequestType"/>
+
+			<xsd:element name="addResponse" type="tns:calResponseType"/>
+		</xsd:schema>
+
+	</wsdl:types>
+
+	<wsdl:message name="addRequest">
+		<wsdl:part name="body" element="tns:addRequest"/>
+	</wsdl:message>
+
+	<wsdl:message name="addResponse">
+		<wsdl:part name="body" element="tns:addResponse"/>
+	</wsdl:message>
+
+	<wsdl:portType name="CalculatorServicePortType">
+
+		<wsdl:operation name="addRequest">
+			<wsdl:input message="tns:addRequest" name="addRequest"/>
+			<wsdl:output message="tns:addResponse" name="addResponse"/>
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+	<wsdl:binding name="CalculatorServiceBinding" type="tns:CalculatorServicePortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		
+		<wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#EfilingWsSecPolicy" />
+
+		<wsdl:operation name="addRequest">
+			<soap:operation soapAction="" style="document"/>
+
+			<wsdl:input name="addRequest">
+				<soap:body use="literal"/>
+				<wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#EfilingPartsPolicy" />
+			</wsdl:input>
+
+			<wsdl:output name="addResponse">
+				<soap:body use="literal"/>
+				<wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#EfilingPartsPolicy" />
+			</wsdl:output>
+
+		</wsdl:operation>
+
+	</wsdl:binding>
+
+	<wsdl:service name="CalculatorService">
+		<wsdl:port name="CalculatorServicePort" binding="tns:CalculatorServiceBinding">
+			<soap:address location="http://localhost:8080/Calculator/CalculatorService"/>
+		</wsdl:port>
+	</wsdl:service>
+	
+	<wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+		wsu:Id="EfilingWsSecPolicy"	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+		
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:AsymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:InitiatorToken>
+							<wsp:Policy>
+								<sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+									<wsp:Policy>
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:InitiatorToken>
+						<sp:RecipientToken>
+							<wsp:Policy>
+								<sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+									<wsp:Policy>
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:RecipientToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic128 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Lax />
+							</wsp:Policy>
+						</sp:Layout>
+						<sp:IncludeTimestamp />
+						<sp:OnlySignEntireHeadersAndBody />
+					</wsp:Policy>
+				</sp:AsymmetricBinding>
+				
+				<sp:SignedEncryptedSupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<wsp:Policy>
+						<sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+							<wsp:Policy>
+								<sp:WssUsernameToken10 />
+							</wsp:Policy>
+						</sp:UsernameToken>
+					</wsp:Policy>
+				</sp:SignedEncryptedSupportingTokens>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	
+	<wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+		wsu:Id="EfilingPartsPolicy"	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:SignedParts xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<sp:Body />
+				</sp:SignedParts>
+				
+				<sp:EncryptedParts xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<sp:Body />
+				</sp:EncryptedParts>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+
+</wsdl:definitions>
