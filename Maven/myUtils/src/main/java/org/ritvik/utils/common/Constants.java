@@ -21,7 +21,7 @@ public class Constants implements Serializable{
 	
 	//ADConnectionManager.java
 	
-	public static String SEARCH_BASE = "DC=corp,DC=hdfcbank,DC=com";
+	public static String SEARCH_BASE = "DC=corp,DC=axisbank,DC=com";
 	
 	//public static String SEARCH_BASE = "DC=hbctxdom,DC=com";
 	
