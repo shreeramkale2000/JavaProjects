@@ -23,7 +23,7 @@ public class Constants implements Serializable{
 	
 	public static String SEARCH_BASE = "DC=corp,DC=bank,DC=com";
 	
-	//public static String SEARCH_BASE = "DC=hbctxdom,DC=com";
+	//public static String SEARCH_BASE = "DC=ctxdom,DC=com";
 	
 	//FileUtils.java
 	
