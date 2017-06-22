@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.ritvik.spring.Employee;
 
 @Repository("namedJdbcDaoImpl")
-public class NamedJdbcDaoImpl {
+public class NamedJdbcDaoImpl implements NamedJdbcDao {
 	@Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
@@ -28,6 +28,7 @@ public class NamedJdbcDaoImpl {
         return namedParameterJdbcTemplate;
     }
     
+    @Override
     public int deleteData(int id){
     	//int size = getNamedParameterJdbcTemplate().update("DELETE FROM EMP WHERE ID = :id", new MapSqlParameterSource().addValue("id", id));
     	Employee emp = new Employee();

@@ -1,16 +1,25 @@
 package com.ritvik.spring;
 
-import com.ritvik.dao.JdbcDaoImpl;
-import com.ritvik.dao.JdbcDaoSupportImpl;
-import com.ritvik.dao.NamedJdbcDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import com.ritvik.dao.JdbcDao;
+import com.ritvik.dao.JdbcDaoEx;
+import com.ritvik.dao.NamedJdbcDao;
+
+@Repository("businessLogic")
 public class BusinessLogic {
 	
+	@Autowired
+	private JdbcDao jdbcDaoImpl;
+	
+	@Autowired
+	private JdbcDaoEx jdbcDaoSupportImpl;
+	
+	@Autowired
+	private NamedJdbcDao namedJdbcDaoImpl;
+	
 	public void start() {
-		JdbcDaoImpl jdbcDaoImpl = App.context.getBean("jdbcDaoImpl", JdbcDaoImpl.class);
-		JdbcDaoSupportImpl jdbcDaoSupportImpl = App.context.getBean("jdbcDaoSupportImpl", JdbcDaoSupportImpl.class);
-		NamedJdbcDaoImpl namedJdbcDaoImpl = App.context.getBean("namedJdbcDaoImpl", NamedJdbcDaoImpl.class);
-		
 		jdbcDaoImpl.getDataCount();
 		
 		namedJdbcDaoImpl.deleteData(999999999);

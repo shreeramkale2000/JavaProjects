@@ -12,7 +12,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		BusinessLogic demo = new BusinessLogic();
-		demo.start();
+		BusinessLogic businessLogic = context.getBean("businessLogic", BusinessLogic.class);
+		businessLogic.start();
 	}
 }

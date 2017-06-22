@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.ritvik.dao.JdbcDaoSupportImpl.EmpRowMapper;
 
 @Repository("jdbcDaoImpl")
-public class JdbcDaoImpl {
+public class JdbcDaoImpl implements JdbcDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -19,6 +19,7 @@ public class JdbcDaoImpl {
         return jdbcTemplate;
     }
 	
+	@Override
 	public int getDataCount(){
 		int size = getJdbcTemplate().query("SELECT * FROM EMP", new EmpRowMapper()).size();
 		logger.info("Data Size : " + size);

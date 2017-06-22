@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.ritvik.spring.Employee;
 
-public class JdbcDaoSupportImpl extends JdbcDaoSupport{
+public class JdbcDaoSupportImpl extends JdbcDaoSupport implements JdbcDaoEx{
 	
 	@Value("${data.select.msg}")
 	private String data_select_msg;
@@ -20,12 +20,14 @@ public class JdbcDaoSupportImpl extends JdbcDaoSupport{
 	
 	private Logger logger = Logger.getLogger(JdbcDaoSupportImpl.class);
 	
+	@Override
 	public int postData(int id, String name){
 		int size = getJdbcTemplate().update("INSERT INTO EMP VALUES (?, ?)", new Object[]{id, name});
 		logger.info(data_insert_msg + size);
 		return size;
 	}
 	
+	@Override
 	public Employee getData(int id){
 		Employee emp = getJdbcTemplate().queryForObject("SELECT * FROM EMP WHERE ID = ?", new Object[]{id} , new EmpRowMapper()); 
 		logger.info(data_select_msg + emp.getName());
