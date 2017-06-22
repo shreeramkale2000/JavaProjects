@@ -1,4 +1,4 @@
-package com.ritvik.spring;
+package com.ritvik.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import com.ritvik.spring.Employee;
 
 public class JdbcDaoSupportImpl extends JdbcDaoSupport{
 	

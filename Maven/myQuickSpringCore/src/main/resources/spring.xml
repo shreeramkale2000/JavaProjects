@@ -12,7 +12,7 @@
 	
 	<context:annotation-config />
 	
-	<context:component-scan base-package="com.ritvik.spring" scoped-proxy="no" />
+	<context:component-scan base-package="com.ritvik" scoped-proxy="no" />
 	
 	<aop:aspectj-autoproxy />
 	
@@ -33,7 +33,7 @@
 	
 	<bean id="stackTraceWriter" class="java.io.StringWriter" />
 	
-	<bean id="dataSource" class="com.ritvik.spring.MyCustomBasicDataSource" >
+	<bean id="dataSource" class="com.ritvik.dao.MyCustomBasicDataSource" >
 		<property name="driverClassName" value="${db.driverClassName}" />
 		<property name="url" value="${db.url}" />
 		<property name="username" value="${db.username}" />
@@ -68,7 +68,7 @@
 		<!--<property name="exceptionTranslator" ref="customJdbcSQLErrorCodesTranslator" />-->
 	</bean>
 	
-	<bean id="jdbcDaoSupportImpl" class="com.ritvik.spring.JdbcDaoSupportImpl" >
+	<bean id="jdbcDaoSupportImpl" class="com.ritvik.dao.JdbcDaoSupportImpl" >
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	

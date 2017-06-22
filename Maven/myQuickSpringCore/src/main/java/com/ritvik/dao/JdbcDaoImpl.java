@@ -1,11 +1,11 @@
-package com.ritvik.spring;
+package com.ritvik.dao;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ritvik.spring.JdbcDaoSupportImpl.EmpRowMapper;
+import com.ritvik.dao.JdbcDaoSupportImpl.EmpRowMapper;
 
 @Repository("jdbcDaoImpl")
 public class JdbcDaoImpl {
