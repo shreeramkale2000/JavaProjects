@@ -37,7 +37,7 @@ public class CxfService implements CalculatorServicePortType {
 		Calculator parasoftService = appContext.getBean("parasoftService", Calculator.class);
 		ICalculator parasoftPort = parasoftService.getICalculator();
 		
-		CxfServiceDao cxfServiceDao = appContext.getBean("cxfServiceDao", CxfServiceDao.class);
+		CxfServiceDaoImpl cxfServiceDao = appContext.getBean("cxfServiceDao", CxfServiceDaoImpl.class);
 		try {
 			addResponse.setResult(parasoftPort.add(addRequest.getArgOne(), addRequest.getArgTwo()));
 			addResponse.setRespCode(default_success_code);

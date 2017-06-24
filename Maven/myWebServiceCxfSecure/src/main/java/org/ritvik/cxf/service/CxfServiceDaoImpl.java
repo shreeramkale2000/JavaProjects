@@ -12,14 +12,14 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository("cxfServiceDao")
-public class CxfServiceDao {
+public class CxfServiceDaoImpl {
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	@Autowired
 	private StringWriter stackTraceWriter;
 
-	private Logger logger = Logger.getLogger(CxfServiceDao.class);
+	private Logger logger = Logger.getLogger(CxfServiceDaoImpl.class);
 
 	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
 		return namedParameterJdbcTemplate;
