@@ -23,10 +23,10 @@ public class TestController extends AbstractController {
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("Entered TestController");
-		TestDaoSpringTx testDaoSpringTx = appContext.getBean("testDaoSpringTx", TestDaoSpringTx.class);
+		TestDaoSpring testDaoSpringImpl = appContext.getBean("testDaoSpringImpl", TestDaoSpring.class);
 		
 		response.getWriter().append(served_msg).append(request.getContextPath());
-		response.getWriter().append("\nName is: ").append(testDaoSpringTx.getDate());
+		response.getWriter().append("\nName is: ").append(testDaoSpringImpl.getDate());
 		
 		return null;
 	}

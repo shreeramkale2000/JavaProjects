@@ -12,8 +12,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository("testDaoSpringTx")
-public class TestDaoSpringTx {
+@Repository("testDaoSpringImpl")
+public class TestDaoSpringImpl implements TestDaoSpring {
 	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -24,12 +24,13 @@ public class TestDaoSpringTx {
 	@Value("${data.select.msg}")
 	private String data_select_msg;
 
-	private Logger logger = Logger.getLogger(TestDaoSpringTx.class);
+	private Logger logger = Logger.getLogger(TestDaoSpringImpl.class);
 
 	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
 		return namedParameterJdbcTemplate;
 	}
 
+	@Override
 	public String getDate(){
 		String date = "";
 		try {
