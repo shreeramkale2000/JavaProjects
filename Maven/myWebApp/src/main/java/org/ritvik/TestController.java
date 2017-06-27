@@ -7,10 +7,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+//import org.springframework.web.servlet.mvc.AbstractController;
 
-public class TestController extends AbstractController {
+@Controller
+public class TestController {
 	
 	@Autowired
 	private ApplicationContext appContext;
@@ -20,7 +24,7 @@ public class TestController extends AbstractController {
 	
 	private Logger logger = Logger.getLogger(TestController.class);
 
-	@Override
+	@RequestMapping(value = "/TestController", method = RequestMethod.GET)
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("Entered TestController");
 		TestDaoSpring testDaoSpringImpl = appContext.getBean("testDaoSpringImpl", TestDaoSpring.class);

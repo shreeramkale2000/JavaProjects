@@ -52,6 +52,6 @@
     
     <bean id="stackTraceWriter" class="java.io.StringWriter" />
     
-    <bean name="/TestController" class="org.ritvik.TestController" />
+    <!--<bean name="/TestController" class="org.ritvik.TestController" />-->
 	
 </beans>
