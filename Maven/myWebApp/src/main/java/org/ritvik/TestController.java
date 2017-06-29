@@ -28,7 +28,8 @@ public class TestController extends AbstractController {
 
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("Entered TestController");
+		logger.info("TestController handleRequestInternal called...");
+		
 		TestDaoSpring testDaoSpringImpl = appContext.getBean("testDaoSpringImpl", TestDaoSpring.class);
 		
 		try {
