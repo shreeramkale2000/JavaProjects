@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
-public class TestController extends AbstractController {
+public class TestControllerAbstract extends AbstractController {
 	
 	@Autowired
 	private ApplicationContext appContext;
