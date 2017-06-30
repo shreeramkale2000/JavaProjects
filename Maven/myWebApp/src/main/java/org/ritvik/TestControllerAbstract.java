@@ -20,7 +20,7 @@ public class TestControllerAbstract extends AbstractController {
 	@Value("${served.msg}")
 	private String served_msg;
 	
-	private Logger logger = Logger.getLogger(TestController.class);
+	private Logger logger = Logger.getLogger(TestControllerAbstract.class);
 
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) {
