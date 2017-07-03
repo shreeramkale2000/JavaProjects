@@ -56,6 +56,11 @@
     
     <bean id="stackTraceWriter" class="java.io.StringWriter" />
     
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+    
     <bean name="/TestControllerAbstract" class="org.ritvik.TestControllerAbstract" />
 	
 </beans>
