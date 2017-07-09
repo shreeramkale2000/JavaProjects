@@ -48,10 +48,18 @@
 			<artifactId>commons-pool2</artifactId>
 			<version>${commons.pool2.version}</version>
 		</dependency>
-
-		<dependency>
+		
+		<!-- Derby Network Driver -->
+		<!-- <dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derbyclient</artifactId>
+			<version>${derbyclient.version}</version>
+		</dependency> -->
+
+		<!-- Derby Embedded Driver -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
 			<version>${derbyclient.version}</version>
 		</dependency>
 

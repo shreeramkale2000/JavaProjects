@@ -52,6 +52,7 @@
 	
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
+			<tx:method name="create*" />
 			<tx:method name="post*" />
 			<tx:method name="delete*" />
 			<tx:method name="put*" />

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ritvik.dao.JdbcDaoSupportImpl.EmpRowMapper;
 import com.ritvik.spring.Employee;
 
 @Repository("namedJdbcDaoImpl")
@@ -27,6 +28,13 @@ public class NamedJdbcDaoImpl implements NamedJdbcDao {
     public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
         return namedParameterJdbcTemplate;
     }
+    
+    @Override
+	public int getDataCount(){
+		int size = getNamedParameterJdbcTemplate().query("SELECT * FROM EMP", new EmpRowMapper()).size();
+		logger.info("Data Size : " + size);
+		return size;
+	}
     
     @Override
     public int deleteData(int id){
@@ -46,7 +54,7 @@ public class NamedJdbcDaoImpl implements NamedJdbcDao {
 
 		@Override
 		public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return rs.getString("1");
+			return rs.getString(1);
 		}
 
 	}

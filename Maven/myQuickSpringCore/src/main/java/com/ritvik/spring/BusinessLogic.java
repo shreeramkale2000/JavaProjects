@@ -20,8 +20,9 @@ public class BusinessLogic {
 	private NamedJdbcDao namedJdbcDaoImpl;
 	
 	public void start() {
-		jdbcDaoImpl.getDataCount();
+		jdbcDaoImpl.createTables();
 		
+		namedJdbcDaoImpl.getDataCount();
 		namedJdbcDaoImpl.deleteData(999999999);
 		
 		jdbcDaoSupportImpl.postData(999999999, "051DISCREQ999999999.xml");
