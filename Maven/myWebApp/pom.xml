@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
-		<derbyclient.version>10.13.1.1</derbyclient.version>
+		<derby.version>10.13.1.1</derby.version>
 		<log4j.version>1.2.17</log4j.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<aspectjweaver.version>1.8.10</aspectjweaver.version>
@@ -36,7 +36,14 @@
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derbyclient</artifactId>
-			<version>${derbyclient.version}</version>
+			<version>${derby.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>${derby.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -299,7 +306,7 @@
 									<goal>copy-dependencies</goal>
 								</goals>
 								<configuration>
-									<includeArtifactIds>derbyclient</includeArtifactIds>
+									<includeArtifactIds>derby,derbyclient</includeArtifactIds>
 									<outputDirectory>${project.build.directory}/databaseDriver</outputDirectory>
 								</configuration>
 							</execution>
@@ -359,16 +366,25 @@
 									<jbossHome>${project.build.directory}/wildfly-run/wildfly-10.1.0.Final</jbossHome>
 									
 									<commands>
-										<command>module add --name=org.apache.derby
-											--resources=${project.build.directory}/databaseDriver/derbyclient-${derbyclient.version}.jar 
-											--dependencies=javax.api</command>
+										<command>module add --name=org.apache.derbyclient --dependencies=javax.api
+											--resources=${project.build.directory}/databaseDriver/derbyclient-${derby.version}.jar</command>
+										<command>module add --name=org.apache.derby --dependencies=javax.api
+											--resources=${project.build.directory}/databaseDriver/derby-${derby.version}.jar</command>
 										<command>/subsystem=datasources
 											/jdbc-driver=derby-network:add(driver-name=derby-network,
-											driver-module-name=org.apache.derby,
+											driver-module-name=org.apache.derbyclient,
 											driver-class-name=org.apache.derby.jdbc.ClientDriver)</command>
-										<command>data-source add --name=DerbyDS --driver-name=derby-network
+										<command>/subsystem=datasources
+											/jdbc-driver=derby-embedded:add(driver-name=derby-embedded,
+											driver-module-name=org.apache.derby,
+											driver-class-name=org.apache.derby.jdbc.EmbeddedDriver)</command>
+										<command>data-source add --name=DerbyNetworkDS --driver-name=derby-network
 											--connection-url=jdbc:derby://localhost:1527/ritvik_db;create=true
-											--jndi-name=java:/DerbyDS --user-name=app --password=app
+											--jndi-name=java:/DerbyNetworkDS --user-name=app --password=app
+											--track-statements=true</command>
+										<command>data-source add --name=DerbyEmbedDS --driver-name=derby-embedded
+											--connection-url=jdbc:derby:ritvik_db;create=true
+											--jndi-name=java:/DerbyEmbedDS --user-name=app --password=app
 											--track-statements=true</command>
 									</commands>
 									<failOnError>false</failOnError>

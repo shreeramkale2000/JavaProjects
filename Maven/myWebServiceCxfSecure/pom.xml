@@ -14,7 +14,7 @@
 		<java.version>1.7</java.version>
 		<cxf.version>3.0.12</cxf.version>
 		<slf4j.version>1.7.14</slf4j.version>
-		<derbyclient.version>10.13.1.1</derbyclient.version>
+		<derby.version>10.13.1.1</derby.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<aspectjweaver.version>1.8.10</aspectjweaver.version>
 		<aopalliance.version>1.0</aopalliance.version>
@@ -94,9 +94,17 @@
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derbyclient</artifactId>
-			<version>${derbyclient.version}</version>
+			<version>${derby.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>${derby.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<!-- maven help:effective-pom -->
@@ -306,7 +314,7 @@
 									<goal>copy-dependencies</goal>
 								</goals>
 								<configuration>
-									<includeArtifactIds>derbyclient</includeArtifactIds>
+									<includeArtifactIds>derby,derbyclient</includeArtifactIds>
 									<outputDirectory>${project.build.directory}/databaseDriver</outputDirectory>
 								</configuration>
 							</execution>
@@ -368,7 +376,7 @@
 
 									<commands>
 										<command>module add --name=org.apache.derby
-											--resources=${project.build.directory}/databaseDriver/derbyclient-${derbyclient.version}.jar
+											--resources=${project.build.directory}/databaseDriver/derbyclient-${derby.version}.jar
 											--dependencies=javax.api</command>
 										<command>/subsystem=datasources
 											/jdbc-driver=derby-network:add(driver-name=derby-network,
