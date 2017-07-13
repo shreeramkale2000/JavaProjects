@@ -90,13 +90,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbyclient</artifactId>
-			<version>${derby.version}</version>
-			<scope>provided</scope>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.derby</groupId>
@@ -314,7 +307,7 @@
 									<goal>copy-dependencies</goal>
 								</goals>
 								<configuration>
-									<includeArtifactIds>derby,derbyclient</includeArtifactIds>
+									<includeArtifactIds>derby</includeArtifactIds>
 									<outputDirectory>${project.build.directory}/databaseDriver</outputDirectory>
 								</configuration>
 							</execution>
@@ -342,8 +335,10 @@
 
 									<!-- Settings for Jboss Download from Dist -->
 									<groupId>org.wildfly</groupId>
-									<artifactId>jboss-eap</artifactId>
-									<version>7.0</version>
+									<!--<artifactId>jboss-eap</artifactId>
+									<version>7.0</version>-->
+									<artifactId>wildfly-dist</artifactId>
+									<version>10.1.0.Final</version>
 
 									<server-type>STANDALONE</server-type>
 									<serverConfig>standalone-full.xml</serverConfig>
@@ -372,20 +367,19 @@
 
 								<configuration>
 									<!-- If Using Separate Downloaded Jboss, Configure Here. Same as Defined in Jboss Start -->
-									<jbossHome>${project.build.directory}/wildfly-run/jboss-eap-7.0</jbossHome>
+									<!-- <jbossHome>${project.build.directory}/wildfly-run/jboss-eap-7.0</jbossHome> -->
+									<jbossHome>${project.build.directory}/wildfly-run/wildfly-10.1.0.Final</jbossHome>
 
 									<commands>
-										<command>module add --name=org.apache.derby
-											--resources=${project.build.directory}/databaseDriver/derbyclient-${derby.version}.jar
-											--dependencies=javax.api</command>
+										<command>module add --name=org.apache.derby --dependencies=javax.api
+											--resources=${project.build.directory}/databaseDriver/derby-${derby.version}.jar</command>
 										<command>/subsystem=datasources
-											/jdbc-driver=derby-network:add(driver-name=derby-network,
+											/jdbc-driver=derby-embedded:add(driver-name=derby-embedded,
 											driver-module-name=org.apache.derby,
-											driver-class-name=org.apache.derby.jdbc.ClientDriver)</command>
-										<command>data-source add --name=DerbyDS
-											--driver-name=derby-network
-											--connection-url=jdbc:derby://localhost:1527/ritvik_db;create=true
-											--jndi-name=java:/DerbyDS --user-name=app --password=app
+											driver-class-name=org.apache.derby.jdbc.EmbeddedDriver)</command>
+										<command>data-source add --name=DerbyEmbedDS --driver-name=derby-embedded
+											--connection-url=jdbc:derby:${jboss.server.base.dir}/ritvik_db;create=true
+											--jndi-name=java:/DerbyEmbedDS --user-name=app --password=app
 											--track-statements=true</command>
 									</commands>
 									<failOnError>false</failOnError>
