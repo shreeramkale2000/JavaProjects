@@ -52,7 +52,7 @@ public class TestDao {
 		Connection conn = null;
         InitialContext ic = new InitialContext();
 
-        DataSource ds = (DataSource) ic.lookup("java:/DerbyNetworkDS");
+        DataSource ds = (DataSource) ic.lookup("java:/DerbyEmbedDS");
         conn = ds.getConnection();
         
         return conn;
