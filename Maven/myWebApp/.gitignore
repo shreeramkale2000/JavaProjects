@@ -5,3 +5,4 @@
 .factorypath
 /src/main/webapp/META-INF/maven/
 /logs/
+derby.log

@@ -383,7 +383,7 @@
 											--jndi-name=java:/DerbyNetworkDS --user-name=app --password=app
 											--track-statements=true</command>
 										<command>data-source add --name=DerbyEmbedDS --driver-name=derby-embedded
-											--connection-url=jdbc:derby:ritvik_db;create=true
+											--connection-url=jdbc:derby:${jboss.server.base.dir}/ritvik_db;create=true
 											--jndi-name=java:/DerbyEmbedDS --user-name=app --password=app
 											--track-statements=true</command>
 									</commands>
