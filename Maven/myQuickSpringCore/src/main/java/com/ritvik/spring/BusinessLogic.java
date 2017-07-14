@@ -3,15 +3,15 @@ package com.ritvik.spring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ritvik.dao.JdbcDao;
+//import com.ritvik.dao.JdbcDao;
 import com.ritvik.dao.JdbcDaoEx;
 import com.ritvik.dao.NamedJdbcDao;
 
 @Repository("businessLogic")
 public class BusinessLogic {
 	
-	@Autowired
-	private JdbcDao jdbcDaoImpl;
+	//@Autowired
+	//private JdbcDao jdbcDaoImpl;
 	
 	@Autowired
 	private JdbcDaoEx jdbcDaoSupportImpl;
@@ -20,7 +20,7 @@ public class BusinessLogic {
 	private NamedJdbcDao namedJdbcDaoImpl;
 	
 	public void start() {
-		jdbcDaoImpl.createTables();
+		//jdbcDaoImpl.createTables();
 		
 		namedJdbcDaoImpl.getDataCount();
 		namedJdbcDaoImpl.deleteData(999999999);
