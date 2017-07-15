@@ -289,11 +289,94 @@
 
 		<profile>
 			<id>StartJboss</id>
+			
+			<properties>
+				<db.driverClassName>org.apache.derby.jdbc.EmbeddedDriver</db.driverClassName>
+				<db.url>jdbc:derby:</db.url>
+				<db.name>ritvik_db</db.name>
+				<db.username>app</db.username>
+				<db.password>password</db.password>
+				<db.path>D:/Workspaces/JavaProjects/Maven/myWebServiceCxfSecure/target/</db.path>
+			</properties>
 
 			<build>
 				<defaultGoal>clean install</defaultGoal>
 
 				<plugins>
+				
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.5</version>
+
+						<dependencies>
+							<!-- specify the dependent jdbc driver here -->
+							<dependency>
+								<groupId>org.apache.derby</groupId>
+								<artifactId>derby</artifactId>
+								<version>${derby.version}</version>
+							</dependency>
+						</dependencies>
+
+						<!-- common configuration shared by all executions -->
+						<configuration>
+							<driver>${db.driverClassName}</driver>
+							<username>${db.username}</username>
+							<password>${db.password}</password>
+							
+							<onError>continue</onError>
+							<skip>${maven.test.skip}</skip>
+						</configuration>
+
+						<executions>
+
+							<execution>
+								<id>create-schema</id>
+								<phase>process-test-resources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>${db.url}${project.build.directory}/${db.name};create=true</url>
+									<srcFiles>
+										<srcFile>${basedir}/src/test/sql/schema.sql</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>create-data</id>
+								<phase>process-test-resources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>${db.url}${project.build.directory}/${db.name}</url>
+									<autocommit>true</autocommit>
+									<orderFile>ascending</orderFile>
+									<fileset>
+										<basedir>${basedir}</basedir>
+										<includes>
+											<include>src/test/sql/test-data.sql</include>
+										</includes>
+									</fileset>
+								</configuration>
+							</execution>
+							
+							<execution>
+								<id>shutdown-schema</id>
+								<phase>process-test-resources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>${db.url}${db.path}${db.name};shutdown=true</url>
+									<skipOnConnectionError>true</skipOnConnectionError>
+								</configuration>
+							</execution>
+							
+						</executions>
+					</plugin>
 
 					<plugin>
 						<artifactId>maven-dependency-plugin</artifactId>
@@ -376,10 +459,10 @@
 										<command>/subsystem=datasources
 											/jdbc-driver=derby-embedded:add(driver-name=derby-embedded,
 											driver-module-name=org.apache.derby,
-											driver-class-name=org.apache.derby.jdbc.EmbeddedDriver)</command>
+											driver-class-name=${db.driverClassName})</command>
 										<command>data-source add --name=DerbyEmbedDS --driver-name=derby-embedded
-											--connection-url=jdbc:derby:${jboss.server.base.dir}/ritvik_db;create=true
-											--jndi-name=java:/DerbyEmbedDS --user-name=app --password=app
+											--connection-url=${db.url}${db.path}${db.name}
+											--jndi-name=java:/DerbyEmbedDS --user-name=${db.username} --password=${db.password}
 											--track-statements=true</command>
 									</commands>
 									<failOnError>false</failOnError>
