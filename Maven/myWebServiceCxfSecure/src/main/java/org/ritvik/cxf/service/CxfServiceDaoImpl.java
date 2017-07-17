@@ -42,7 +42,7 @@ public class CxfServiceDaoImpl implements CxfServiceDao{
 
 		@Override
 		public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return rs.getString("1");
+			return rs.getString(1);
 		}
 
 	}
