@@ -295,7 +295,8 @@
 				<db.name>ritvik_db</db.name>
 				<db.username>app</db.username>
 				<db.password>password</db.password>
-				<db.path>D:/Workspaces/JavaProjects/Maven/myWebApp/target/</db.path>
+				<db.password.encrypted>28247b09eaf7e189</db.password.encrypted>
+				<db.path>D:/Development/Projects/GitHub/JavaProjects/Maven/myWebApp/target/</db.path>
 			</properties>
 
 			<build>
@@ -493,9 +494,11 @@
 											--connection-url=${db.url}//localhost:1527/${db.name}
 											--jndi-name=java:/DerbyNetworkDS --user-name=${db.username} --password=${db.password}
 											--track-statements=true</command>
+										<command>/subsystem=security/security-domain=databaseSecure:add(cache-type=default)</command>
+										<command>/subsystem=security/security-domain=databaseSecure/authentication=classic:add(login-modules=[{"code"=>"org.picketbox.datasource.security.SecureIdentityLoginModule", "flag"=>"required", "module-options"=>[("username"=>"${db.username}"), ("password"=>"${db.password.encrypted}"), ("managedConnectionFactoryName"=>"jboss.jca:service=LocalTxCM,name=DerbyDS")]}])</command>
 										<command>data-source add --name=DerbyEmbedDS --driver-name=derby-embedded
 											--connection-url=${db.url}${db.path}${db.name}
-											--jndi-name=java:/DerbyEmbedDS --user-name=${db.username} --password=${db.password}
+											--jndi-name=java:/DerbyEmbedDS --security-domain=databaseSecure
 											--track-statements=true</command>
 									</commands>
 									<failOnError>false</failOnError>
