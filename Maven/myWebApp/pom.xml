@@ -19,31 +19,28 @@
 		<java.version>1.7</java.version>
 		<derby.version>10.13.1.1</derby.version>
 		<log4j.version>1.2.17</log4j.version>
+		<commons.dbcp2.version>2.1.1</commons.dbcp2.version>
+		<commons.pool2.version>2.4.2</commons.pool2.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<aspectjweaver.version>1.8.10</aspectjweaver.version>
 		<aopalliance.version>1.0</aopalliance.version>
 		<cglib.version>3.2.5</cglib.version>
+
+		<db.driverClassName>org.apache.derby.jdbc.EmbeddedDriver</db.driverClassName>
+		<db.url>jdbc:derby:</db.url>
+		<db.name>ritvik_db</db.name>
+		<db.username>app</db.username>
+		<db.password>password</db.password>
+		<db.password.encrypted>28247b09eaf7e189</db.password.encrypted>
+		<db.path>D:/Development/Projects/GitHub/JavaProjects/Maven/myWebApp/target/</db.path>
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbyclient</artifactId>
-			<version>${derby.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>${derby.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -53,13 +50,39 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>${commons.dbcp2.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>${commons.pool2.version}</version>
+		</dependency>
+
+		<!-- Derby Network Driver -->
+		<!-- <dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>${derby.version}</version>
+		</dependency> -->
+
+		<!-- Derby Embedded Driver -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>${derby.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -96,12 +119,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 	</dependencies>
 
 	<!-- maven help:effective-pom -->
 	<build>
 		<finalName>myWebApp</finalName>
+
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 
 		<plugins>
 
@@ -133,6 +163,80 @@
 							<goal>resources</goal>
 						</goals>
 					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+
+				<dependencies>
+					<!-- specify the dependent jdbc driver here -->
+					<dependency>
+						<groupId>org.apache.derby</groupId>
+						<artifactId>derby</artifactId>
+						<version>${derby.version}</version>
+					</dependency>
+				</dependencies>
+
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>${db.driverClassName}</driver>
+					<username>${db.username}</username>
+					<password>${db.password}</password>
+
+					<onError>continue</onError>
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+
+				<executions>
+
+					<execution>
+						<id>create-schema</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>${db.url}${project.build.directory}/${db.name};create=true</url>
+							<srcFiles>
+								<srcFile>${basedir}/src/test/sql/schema.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-data</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>${db.url}${project.build.directory}/${db.name}</url>
+							<autocommit>true</autocommit>
+							<orderFile>ascending</orderFile>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/test/sql/test-data.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>shutdown-schema</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>${db.url}${db.path}${db.name};shutdown=true</url>
+							<skipOnConnectionError>true</skipOnConnectionError>
+						</configuration>
+					</execution>
+
 				</executions>
 			</plugin>
 
@@ -251,9 +355,10 @@
 			<id>RunAppJetty</id>
 
 			<build>
-				<defaultGoal>clean package</defaultGoal>
+				<defaultGoal>clean</defaultGoal>
 
 				<plugins>
+
 					<plugin>
 						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
@@ -262,7 +367,7 @@
 						<executions>
 							<execution>
 								<id>run-jetty</id>
-								<phase>package</phase>
+								<phase>clean</phase>
 								<goals>
 									<goal>run-war</goal>
 								</goals>
@@ -273,7 +378,7 @@
 										<contextPath>/myWebApp</contextPath>
 									</webApp>
 									<httpConnector>
-										<port>8081</port>
+										<port>8086</port>
 									</httpConnector>
 									<scanIntervalSeconds>10</scanIntervalSeconds>
 								</configuration>
@@ -288,109 +393,43 @@
 
 		<profile>
 			<id>StartJboss</id>
-			
-			<properties>
-				<db.driverClassName>org.apache.derby.jdbc.EmbeddedDriver</db.driverClassName>
-				<db.url>jdbc:derby:</db.url>
-				<db.name>ritvik_db</db.name>
-				<db.username>app</db.username>
-				<db.password>password</db.password>
-				<db.password.encrypted>28247b09eaf7e189</db.password.encrypted>
-				<db.path>D:/Development/Projects/GitHub/JavaProjects/Maven/myWebApp/target/</db.path>
-			</properties>
+
+			<dependencies>
+				<!-- Derby Network Driver -->
+				<dependency>
+					<groupId>org.apache.derby</groupId>
+					<artifactId>derbyclient</artifactId>
+					<version>${derby.version}</version>
+					<scope>provided</scope>
+				</dependency>
+
+				<!-- Derby Embedded Driver -->
+				<dependency>
+					<groupId>org.apache.derby</groupId>
+					<artifactId>derby</artifactId>
+					<version>${derby.version}</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
 
 			<build>
 				<defaultGoal>clean install</defaultGoal>
 
 				<plugins>
-				
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sql-maven-plugin</artifactId>
-						<version>1.5</version>
 
-						<dependencies>
-							<!-- specify the dependent jdbc driver here -->
-							<dependency>
-								<groupId>org.apache.derby</groupId>
-								<artifactId>derby</artifactId>
-								<version>${derby.version}</version>
-							</dependency>
-						</dependencies>
-
-						<!-- common configuration shared by all executions -->
-						<configuration>
-							<driver>${db.driverClassName}</driver>
-							<username>${db.username}</username>
-							<password>${db.password}</password>
-							
-							<onError>continue</onError>
-							<skip>${maven.test.skip}</skip>
-						</configuration>
-
-						<executions>
-
-							<execution>
-								<id>create-schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>${db.url}${project.build.directory}/${db.name};create=true</url>
-									<srcFiles>
-										<srcFile>${basedir}/src/test/sql/schema.sql</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>create-data</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>${db.url}${project.build.directory}/${db.name}</url>
-									<autocommit>true</autocommit>
-									<orderFile>ascending</orderFile>
-									<fileset>
-										<basedir>${basedir}</basedir>
-										<includes>
-											<include>src/test/sql/test-data.sql</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							
-							<execution>
-								<id>shutdown-schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>${db.url}${db.path}${db.name};shutdown=true</url>
-									<skipOnConnectionError>true</skipOnConnectionError>
-								</configuration>
-							</execution>
-							
-						</executions>
-					</plugin>
-					
 					<plugin>
 						<groupId>org.codehaus.gmaven</groupId>
 						<artifactId>groovy-maven-plugin</artifactId>
 						<version>2.0</version>
-						
+
 						<dependencies>
 							<dependency>
-							    <groupId>org.codehaus.groovy</groupId>
-							    <artifactId>groovy-all</artifactId>
-							    <version>2.4.12</version>
+								<groupId>org.codehaus.groovy</groupId>
+								<artifactId>groovy-all</artifactId>
+								<version>2.4.12</version>
 							</dependency>
-          				</dependencies>
-						
+						</dependencies>
+
 						<executions>
 							<execution>
 								<id>setproperty</id>
@@ -403,9 +442,9 @@
 								</configuration>
 							</execution>
 						</executions>
-						
+
 					</plugin>
-					
+
 					<plugin>
 						<artifactId>maven-dependency-plugin</artifactId>
 						<version>2.8</version>
@@ -440,14 +479,15 @@
 								</goals>
 
 								<configuration>
-									<!-- The JBoss Application Server's home directory. If not used, JBoss Application Server will be downloaded to target -->
-									<!--<jbossHome></jbossHome>-->
-									
+									<!-- The JBoss Application Server's home directory. If not used, 
+										JBoss Application Server will be downloaded to target -->
+									<!--<jbossHome></jbossHome> -->
+
 									<!-- Settings for Jboss Download from Dist -->
 									<groupId>org.wildfly</groupId>
 									<artifactId>wildfly-dist</artifactId>
 									<version>10.1.0.Final</version>
-									
+
 									<server-type>STANDALONE</server-type>
 									<serverConfig>standalone-full.xml</serverConfig>
 									<server-args>
@@ -474,13 +514,16 @@
 								</goals>
 
 								<configuration>
-									<!-- If Using Separate Downloaded Jboss, Configure Here. Same as Defined in Jboss Start -->
+									<!-- If Using Separate Downloaded Jboss, Configure Here. Same as 
+										Defined in Jboss Start -->
 									<jbossHome>${project.build.directory}/wildfly-run/wildfly-10.1.0.Final</jbossHome>
-									
+
 									<commands>
-										<command>module add --name=org.apache.derbyclient --dependencies=javax.api
+										<command>module add --name=org.apache.derbyclient
+											--dependencies=javax.api
 											--resources=${project.build.directory}/databaseDriver/derbyclient-${derby.version}.jar</command>
-										<command>module add --name=org.apache.derby --dependencies=javax.api
+										<command>module add --name=org.apache.derby
+											--dependencies=javax.api
 											--resources=${project.build.directory}/databaseDriver/derby-${derby.version}.jar</command>
 										<command>/subsystem=datasources
 											/jdbc-driver=derby-network:add(driver-name=derby-network,
@@ -490,15 +533,23 @@
 											/jdbc-driver=derby-embedded:add(driver-name=derby-embedded,
 											driver-module-name=org.apache.derby,
 											driver-class-name=${db.driverClassName})</command>
-										<command>data-source add --name=DerbyNetworkDS --driver-name=derby-network
+										<command>data-source add --name=DerbyNetworkDS
+											--driver-name=derby-network
 											--connection-url=${db.url}//localhost:1527/${db.name}
-											--jndi-name=java:/DerbyNetworkDS --user-name=${db.username} --password=${db.password}
+											--jndi-name=java:/DerbyNetworkDS --user-name=${db.username}
+											--password=${db.password}
 											--track-statements=true</command>
 										<command>/subsystem=security/security-domain=databaseSecure:add(cache-type=default)</command>
-										<command>/subsystem=security/security-domain=databaseSecure/authentication=classic:add(login-modules=[{"code"=>"org.picketbox.datasource.security.SecureIdentityLoginModule", "flag"=>"required", "module-options"=>[("username"=>"${db.username}"), ("password"=>"${db.password.encrypted}"), ("managedConnectionFactoryName"=>"jboss.jca:service=LocalTxCM,name=DerbyDS")]}])</command>
-										<command>data-source add --name=DerbyEmbedDS --driver-name=derby-embedded
+										<command>/subsystem=security/security-domain=databaseSecure/authentication=classic:add(login-modules=[{"code"=>"org.picketbox.datasource.security.SecureIdentityLoginModule",
+											"flag"=>"required",
+											"module-options"=>[("username"=>"${db.username}"),
+											("password"=>"${db.password.encrypted}"),
+											("managedConnectionFactoryName"=>"jboss.jca:service=LocalTxCM,name=DerbyDS")]}])</command>
+										<command>data-source add --name=DerbyEmbedDS
+											--driver-name=derby-embedded
 											--connection-url=${db.url}${db.path}${db.name}
-											--jndi-name=java:/DerbyEmbedDS --security-domain=databaseSecure
+											--jndi-name=java:/DerbyEmbedDS
+											--security-domain=databaseSecure
 											--track-statements=true</command>
 									</commands>
 									<failOnError>false</failOnError>
@@ -593,9 +644,11 @@
 				<resources>
 					<resource>
 						<directory>${basedir}/src/main/resources</directory>
+						<filtering>true</filtering>
 					</resource>
 					<resource>
 						<directory>${basedir}/src/main/resources_uat</directory>
+						<filtering>true</filtering>
 					</resource>
 				</resources>
 

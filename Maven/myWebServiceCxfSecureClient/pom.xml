@@ -94,7 +94,9 @@
 									<extraargs>
 										<extraarg>-verbose</extraarg>
 									</extraargs>
+									<extendedSoapHeaders>true</extendedSoapHeaders>
 									<bindingFile>${basedir}/src/main/resources/binding.xml</bindingFile>
+									<packagenames>org.ritvik.wsdl.calculator</packagenames>
 								</wsdlOption>
 							</wsdlOptions>
 						</configuration>
@@ -345,48 +347,6 @@
 
 						</executions>
 					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>BuildAppForDev</id>
-
-			<build>
-				<defaultGoal>clean package</defaultGoal>
-			</build>
-		</profile>
-
-		<profile>
-			<id>BuildAppForUAT</id>
-			<build>
-				<defaultGoal>clean package</defaultGoal>
-
-				<resources>
-					<resource>
-						<directory>${basedir}/src/main/resources</directory>
-					</resource>
-					<resource>
-						<directory>${basedir}/src/main/resources_uat</directory>
-					</resource>
-				</resources>
-
-				<plugins>
-
-					<plugin>
-						<artifactId>maven-resources-plugin</artifactId>
-
-						<executions>
-							<execution>
-								<id>default-resources</id>
-
-								<configuration>
-									<overwrite>true</overwrite>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
 				</plugins>
 			</build>
 		</profile>

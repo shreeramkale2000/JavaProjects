@@ -79,6 +79,13 @@
 			<artifactId>myUtils</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<dependency>
+    		<groupId>org.picketbox</groupId>
+    		<artifactId>picketbox</artifactId>
+    		<version>5.0.2.Final</version>
+    		<type>jar</type>
+		</dependency>
 
 	</dependencies>
 

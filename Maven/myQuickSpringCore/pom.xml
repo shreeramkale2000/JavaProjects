@@ -16,7 +16,7 @@
 		<log4j.version>1.2.17</log4j.version>
 		<commons.dbcp2.version>2.1.1</commons.dbcp2.version>
 		<commons.pool2.version>2.4.2</commons.pool2.version>
-		<derbyclient.version>10.13.1.1</derbyclient.version>
+		<derby.version>10.13.1.1</derby.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<aspectjweaver.version>1.8.10</aspectjweaver.version>
 		<aopalliance.version>1.0</aopalliance.version>
@@ -24,6 +24,7 @@
 	</properties>
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -53,14 +54,14 @@
 		<!-- <dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derbyclient</artifactId>
-			<version>${derbyclient.version}</version>
+			<version>${derby.version}</version>
 		</dependency> -->
 
 		<!-- Derby Embedded Driver -->
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
-			<version>${derbyclient.version}</version>
+			<version>${derby.version}</version>
 		</dependency>
 
 		<dependency>
@@ -373,7 +374,7 @@
 							<dependency>
 								<groupId>org.apache.derby</groupId>
 								<artifactId>derby</artifactId>
-								<version>${derbyclient.version}</version>
+								<version>${derby.version}</version>
 							</dependency>
 						</dependencies>
 

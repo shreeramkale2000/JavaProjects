@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: Maven Webapp
 Implementation-Version: 1.0
-Built-By: Meenal
+Built-By: Ritvik
 Implementation-Vendor-Id: org.ritvik.webapp
 Build-Jdk: 1.8.0_92
 Created-By: Maven Integration for Eclipse
