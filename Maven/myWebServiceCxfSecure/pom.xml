@@ -15,17 +15,19 @@
 		<cxf.version>3.0.12</cxf.version>
 		<slf4j.version>1.7.14</slf4j.version>
 		<derby.version>10.13.1.1</derby.version>
+		<commons.dbcp2.version>2.1.1</commons.dbcp2.version>
+		<commons.pool2.version>2.4.2</commons.pool2.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<aspectjweaver.version>1.8.10</aspectjweaver.version>
 		<aopalliance.version>1.0</aopalliance.version>
 		<cglib.version>3.2.5</cglib.version>
-
+		
 		<db.driverClassName>org.apache.derby.jdbc.EmbeddedDriver</db.driverClassName>
 		<db.url>jdbc:derby:</db.url>
 		<db.name>ritvik_db</db.name>
 		<db.username>app</db.username>
 		<db.password>password</db.password>
-		<db.path>D:/Workspaces/JavaProjects/Maven/myWebServiceCxfSecure/target/</db.path>
+		<db.path>D:/Development/Projects/GitHub/JavaProjects/Maven/myWebServiceCxfSecure/target/</db.path>
 	</properties>
 
 	<dependencies>
@@ -59,6 +61,32 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>${commons.dbcp2.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>${commons.pool2.version}</version>
+		</dependency>
+
+		<!-- Derby Network Driver -->
+		<!-- <dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>${derby.version}</version>
+		</dependency> -->
+
+		<!-- Derby Embedded Driver -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>${derby.version}</version>
 		</dependency>
 
 		<dependency>
@@ -98,18 +126,28 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>${derby.version}</version>
-			<scope>provided</scope>
-		</dependency>
-
 	</dependencies>
 
 	<!-- maven help:effective-pom -->
 	<build>
 		<finalName>myWebServiceCxfSecure</finalName>
+		
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>database.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>database.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
 
 		<plugins>
 
@@ -211,7 +249,7 @@
 
 					<execution>
 						<id>create-schema</id>
-						<phase>process-test-resources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -225,7 +263,7 @@
 
 					<execution>
 						<id>create-data</id>
-						<phase>process-test-resources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -244,7 +282,7 @@
 
 					<execution>
 						<id>shutdown-schema</id>
-						<phase>process-test-resources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -367,7 +405,45 @@
 	</build>
 
 	<profiles>
+	
+		<profile>
+			<id>RunAppJetty</id>
 
+			<build>
+				<defaultGoal>clean</defaultGoal>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>9.2.11.v20150529</version>
+
+						<executions>
+							<execution>
+								<id>run-jetty</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>run-war</goal>
+								</goals>
+
+								<configuration>
+									<war>${project.build.directory}/${project.build.finalName}.war</war>
+									<webApp>
+										<contextPath>/myWebServiceCxfSecure</contextPath>
+									</webApp>
+									<jettyConfig>${project.basedir}/src/main/config/jetty-ssl.xml</jettyConfig>
+									<scanIntervalSeconds>10</scanIntervalSeconds>
+								</configuration>
+							</execution>
+						</executions>
+
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+		
 	</profiles>
 
 </project>

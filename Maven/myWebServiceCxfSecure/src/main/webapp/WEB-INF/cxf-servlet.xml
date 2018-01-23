@@ -24,11 +24,24 @@
 		<property name="locations" >
 			<list>
 				<value>classpath:properties/Application.properties</value>
+				<value>classpath:database.properties</value>
 			</list>
 		</property>
 	</bean>
 	
-	<jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" />
+	<!-- <jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" lookup-on-startup="true" /> -->
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" >
+		<property name="driverClassName" value="${db.driverClassName}" />
+		<property name="url" value="${db.url}${db.path}\${db.name}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<property name="defaultAutoCommit" value="${db.defaultAutoCommit}"/>
+		<property name="initialSize" value="${db.initialSize}" />
+		<property name="minIdle" value="${db.minIdle}"/>
+		<property name="maxIdle" value="${db.maxIdle}"/>
+		<property name="maxTotal" value="${db.maxTotal}" />
+	</bean>
 	
 	<aop:config>
 		<aop:pointcut id="saveOperation" expression="execution(* *..*Dao*..*(..))" />
