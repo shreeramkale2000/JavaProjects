@@ -35,7 +35,7 @@
 	
 	<bean id="dataSource" class="com.ritvik.dao.MyCustomBasicDataSource" >
 		<property name="driverClassName" value="${db.driverClassName}" />
-		<property name="url" value="${db.url}${db.name}" />
+		<property name="url" value="${db.url}${db.path}\\${db.name}" />
 		<property name="username" value="${db.username}" />
 		<property name="password" value="${db.password}" />
 		<property name="defaultAutoCommit" value="${db.defaultAutoCommit}"/>
