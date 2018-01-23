@@ -24,7 +24,7 @@
 	</properties>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -49,7 +49,7 @@
 			<artifactId>commons-pool2</artifactId>
 			<version>${commons.pool2.version}</version>
 		</dependency>
-		
+
 		<!-- Derby Network Driver -->
 		<!-- <dependency>
 			<groupId>org.apache.derby</groupId>
@@ -69,7 +69,7 @@
 			<artifactId>myUtils</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -112,7 +112,7 @@
 	<!-- maven help:effective-pom -->
 	<build>
 		<finalName>myQuickSpringCore</finalName>
-		
+
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
@@ -149,6 +149,105 @@
 							<goal>resources</goal>
 						</goals>
 					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${basedir}/src/main/resources/database.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+
+				<dependencies>
+					<!-- specify the dependent jdbc driver here -->
+					<dependency>
+						<groupId>org.apache.derby</groupId>
+						<artifactId>derby</artifactId>
+						<version>${derby.version}</version>
+					</dependency>
+				</dependencies>
+
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>${db.driverClassName}</driver>
+					<username>${db.username}</username>
+					<password>${db.password}</password>
+
+					<onError>continue</onError>
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+
+				<executions>
+
+					<execution>
+						<id>create-schema</id>
+						<phase>process-resources</phase>
+						
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>${db.url}${project.build.directory}/${db.name};create=true</url>
+							<srcFiles>
+								<srcFile>${basedir}/src/test/sql/schema.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-data</id>
+						<phase>process-resources</phase>
+						
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>${db.url}${project.build.directory}/${db.name}</url>
+							<autocommit>true</autocommit>
+							<orderFile>ascending</orderFile>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/test/sql/test-data.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>shutdown-schema</id>
+						<phase>process-resources</phase>
+						
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>${db.url}${db.path}/${db.name};shutdown=true</url>
+							<skipOnConnectionError>true</skipOnConnectionError>
+						</configuration>
+					</execution>
+
 				</executions>
 			</plugin>
 
@@ -350,115 +449,21 @@
 				<defaultGoal>clean package</defaultGoal>
 
 				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>properties-maven-plugin</artifactId>
-						<version>1.0.0</version>
-						
-						<executions>
-							<execution>
-								<phase>initialize</phase>
-								<goals>
-									<goal>read-project-properties</goal>
-								</goals>
-								<configuration>
-									<files>
-										<file>${basedir}/src/main/resources/database.properties</file>
-									</files>
-								</configuration>
-							</execution>
-						</executions>
-						
-					</plugin>
-					
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sql-maven-plugin</artifactId>
-						<version>1.5</version>
-
-						<dependencies>
-							<!-- specify the dependent jdbc driver here -->
-							<dependency>
-								<groupId>org.apache.derby</groupId>
-								<artifactId>derby</artifactId>
-								<version>${derby.version}</version>
-							</dependency>
-						</dependencies>
-
-						<!-- common configuration shared by all executions -->
-						<configuration>
-							<driver>${db.driverClassName}</driver>
-							<username>${db.username}</username>
-							<password>${db.password}</password>
-							
-							<onError>continue</onError>
-							<skip>${maven.test.skip}</skip>
-						</configuration>
-
-						<executions>
-
-							<execution>
-								<id>create-schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>${db.url}${project.build.directory}/${db.name};create=true</url>
-									<srcFiles>
-										<srcFile>${basedir}/src/test/sql/schema.sql</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>create-data</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>${db.url}${project.build.directory}/${db.name}</url>
-									<autocommit>true</autocommit>
-									<orderFile>ascending</orderFile>
-									<fileset>
-										<basedir>${basedir}</basedir>
-										<includes>
-											<include>src/test/sql/test-data.sql</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-							
-							<execution>
-								<id>shutdown-schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>${db.url}${project.build.directory}/${db.name};shutdown=true</url>
-									<skipOnConnectionError>true</skipOnConnectionError>
-								</configuration>
-							</execution>
-							
-						</executions>
-					</plugin>
 
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
 						<version>1.6.0</version>
 						<executions>
-							
+
 							<execution>
 								<id>exec-runnable-java</id>
 								<phase>package</phase>
-								
+
 								<goals>
 									<goal>exec</goal>
 								</goals>
-								
+
 								<configuration>
 									<workingDirectory>${project.build.directory}</workingDirectory>
 									<executable>java</executable>
@@ -467,9 +472,9 @@
 										<argument>${project.build.finalName}.jar</argument>
 									</arguments>
 								</configuration>
-								
+
 							</execution>
-							
+
 						</executions>
 					</plugin>
 
@@ -507,7 +512,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
 				</plugins>
 			</build>
 		</profile>

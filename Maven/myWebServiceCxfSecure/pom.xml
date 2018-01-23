@@ -21,13 +21,6 @@
 		<aspectjweaver.version>1.8.10</aspectjweaver.version>
 		<aopalliance.version>1.0</aopalliance.version>
 		<cglib.version>3.2.5</cglib.version>
-		
-		<db.driverClassName>org.apache.derby.jdbc.EmbeddedDriver</db.driverClassName>
-		<db.url>jdbc:derby:</db.url>
-		<db.name>ritvik_db</db.name>
-		<db.username>app</db.username>
-		<db.password>password</db.password>
-		<db.path>D:/Development/Projects/GitHub/JavaProjects/Maven/myWebServiceCxfSecure/target/</db.path>
 	</properties>
 
 	<dependencies>
@@ -140,6 +133,7 @@
 					<include>database.properties</include>
 				</includes>
 			</resource>
+			
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
 				<filtering>false</filtering>
@@ -223,6 +217,28 @@
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${basedir}/src/main/resources/database.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sql-maven-plugin</artifactId>
 				<version>1.5</version>
 
@@ -249,7 +265,8 @@
 
 					<execution>
 						<id>create-schema</id>
-						<phase>generate-resources</phase>
+						<phase>process-resources</phase>
+						
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -263,7 +280,8 @@
 
 					<execution>
 						<id>create-data</id>
-						<phase>generate-resources</phase>
+						<phase>process-resources</phase>
+						
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -282,12 +300,13 @@
 
 					<execution>
 						<id>shutdown-schema</id>
-						<phase>generate-resources</phase>
+						<phase>process-resources</phase>
+						
 						<goals>
 							<goal>execute</goal>
 						</goals>
 						<configuration>
-							<url>${db.url}${db.path}${db.name};shutdown=true</url>
+							<url>${db.url}${db.path}/${db.name};shutdown=true</url>
 							<skipOnConnectionError>true</skipOnConnectionError>
 						</configuration>
 					</execution>
