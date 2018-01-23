@@ -16,7 +16,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<derby.version>10.13.1.1</derby.version>
 		<log4j.version>1.2.17</log4j.version>
 		<commons.dbcp2.version>2.1.1</commons.dbcp2.version>
@@ -377,9 +377,10 @@
 									<webApp>
 										<contextPath>/myWebApp</contextPath>
 									</webApp>
-									<httpConnector>
+									<!-- <httpConnector>
 										<port>8086</port>
-									</httpConnector>
+									</httpConnector> -->
+									<jettyConfig>${project.basedir}/src/main/config/jetty-ssl.xml</jettyConfig>
 									<scanIntervalSeconds>10</scanIntervalSeconds>
 								</configuration>
 							</execution>
