@@ -16,6 +16,10 @@
 		<constructor-arg value="CalculatorService.wsdl" />
 	</bean>
 	
+	<bean name="header" class="org.ritvik.wsdl.calculator.StandardType" >
+		<property name="serviceUser" value="ritvik" />
+	</bean>
+	
 	<bean name="addRequest" class="org.ritvik.wsdl.calculator.AddRequestType" >
 		<property name="argOne" value="1" />
 		<property name="argTwo" value="2" />

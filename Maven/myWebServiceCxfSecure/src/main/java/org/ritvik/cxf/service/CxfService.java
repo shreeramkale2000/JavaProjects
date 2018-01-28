@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.ritvik.wsdl.calculator.AddRequestType;
 import org.ritvik.wsdl.calculator.CalResponseType;
 import org.ritvik.wsdl.calculator.CalculatorServicePortType;
+import org.ritvik.wsdl.calculator.StandardType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +31,7 @@ public class CxfService implements CalculatorServicePortType {
 	
 	private Logger logger = Logger.getLogger(CxfService.class);
 	
-	public CalResponseType addRequest (AddRequestType addRequest) {
+	public CalResponseType addRequest (AddRequestType addRequest, StandardType header) {
 		logger.info("WS Security Passed for Calculator Service");
 		CalResponseType addResponse = appContext.getBean("addResponse", CalResponseType.class);
 		

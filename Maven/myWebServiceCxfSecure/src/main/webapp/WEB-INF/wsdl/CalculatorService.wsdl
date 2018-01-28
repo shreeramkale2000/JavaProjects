@@ -14,6 +14,8 @@
 					<xsd:element minOccurs="0" maxOccurs="1" name="time_stamp" type="xsd:string"/>
 				</xsd:sequence>
 			</xsd:complexType>
+			
+			<xsd:element name="standardType" type="tns:standardType"/>
 
 			<xsd:complexType name="fillersType">
 				<xsd:sequence>
@@ -41,7 +43,6 @@
 					<xsd:element minOccurs="1" maxOccurs="1" name="argOne" type="xsd:float"/>
 					<xsd:element minOccurs="1" maxOccurs="1" name="argTwo" type="xsd:float"/>
 					
-					<xsd:element minOccurs="0" maxOccurs="1" name="standard" type="tns:standardType" />
 					<xsd:element minOccurs="0" maxOccurs="1" name="fillers" type="tns:fillersType" />
 				</xsd:sequence>
 			</xsd:complexType>
@@ -59,6 +60,10 @@
 
 	<wsdl:message name="addResponse">
 		<wsdl:part name="body" element="tns:addResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="standardType">
+		<wsdl:part element="tns:standardType" name="standardType"/>
 	</wsdl:message>
 
 	<wsdl:portType name="CalculatorServicePortType">
@@ -79,6 +84,7 @@
 			<soap:operation soapAction="" style="document"/>
 
 			<wsdl:input name="addRequest">
+				<soap:header message="tns:standardType" part="standardType" use="literal"/>
 				<soap:body use="literal"/>
 				<wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#EfilingPartsPolicy" />
 			</wsdl:input>

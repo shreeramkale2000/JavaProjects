@@ -13,6 +13,7 @@ import org.ritvik.wsdl.calculator.AddRequestType;
 import org.ritvik.wsdl.calculator.CalResponseType;
 import org.ritvik.wsdl.calculator.CalculatorService;
 import org.ritvik.wsdl.calculator.CalculatorServicePortType;
+import org.ritvik.wsdl.calculator.StandardType;
 
 /**
  * Program for CXF Client
@@ -40,10 +41,11 @@ public class CxfClient {
 		//bindingprovider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
 		
 		AddRequestType addRequest = context.getBean("addRequest", AddRequestType.class);
+		StandardType header = context.getBean("header", StandardType.class);
 		CalResponseType resp = null;
 		logger.info("Invoking CalculatorService...");
 		try {
-			resp = port.addRequest(addRequest);
+			resp = port.addRequest(addRequest, header);
 			logger.info(resp.getResult());
 			logger.info(resp.getRespCode());
 			logger.info(resp.getRespMsg());
