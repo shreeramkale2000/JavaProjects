@@ -24,6 +24,7 @@
 	</properties>
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -68,20 +69,6 @@
 			<version>${commons.pool2.version}</version>
 		</dependency>
 
-		<!-- Derby Network Driver -->
-		<!-- <dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbyclient</artifactId>
-			<version>${derby.version}</version>
-		</dependency> -->
-
-		<!-- Derby Embedded Driver -->
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>${derby.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -124,24 +111,6 @@
 	<!-- maven help:effective-pom -->
 	<build>
 		<finalName>myWebServiceCxfSecure</finalName>
-		
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>database.properties</include>
-				</includes>
-			</resource>
-			
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<filtering>false</filtering>
-				<excludes>
-					<exclude>database.properties</exclude>
-				</excludes>
-			</resource>
-		</resources>
 
 		<plugins>
 
@@ -231,7 +200,7 @@
 						</goals>
 						<configuration>
 							<files>
-								<file>${basedir}/src/main/resources/database.properties</file>
+								<file>${basedir}/src/main/config/database.properties</file>
 							</files>
 						</configuration>
 					</execution>
@@ -439,6 +408,17 @@
 						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
 						<version>9.2.11.v20150529</version>
+						
+						<dependencies>
+							
+							<!-- Derby Embedded Driver -->
+							<dependency>
+								<groupId>org.apache.derby</groupId>
+								<artifactId>derby</artifactId>
+								<version>${derby.version}</version>
+							</dependency>
+							
+						</dependencies>
 
 						<executions>
 							<execution>
