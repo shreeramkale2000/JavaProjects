@@ -15,7 +15,7 @@ public class TestControllerRest {
 
 	private Logger logger = Logger.getLogger(TestControllerRest.class);
 
-	@RequestMapping(value = "/Employee/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/Employee/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Employee> getEmployee(@PathVariable("id") int id) {
 		logger.info("TestControllerRest getEmployee called...");
 		Employee emp = new Employee(id, "Ritvik");

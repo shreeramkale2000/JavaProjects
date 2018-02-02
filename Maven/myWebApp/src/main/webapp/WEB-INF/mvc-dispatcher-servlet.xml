@@ -31,9 +31,9 @@
 		</property>
 	</bean>
 	
-	<!-- <jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" /> -->
+	<jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" />
 	
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" >
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" >
 		<property name="driverClassName" value="${db.driverClassName}" />
 		<property name="url" value="${db.url}${db.path}//${db.name}" />
 		<property name="username" value="${db.username}" />
@@ -43,7 +43,7 @@
 		<property name="minIdle" value="${db.minIdle}"/>
 		<property name="maxIdle" value="${db.maxIdle}"/>
 		<property name="maxTotal" value="${db.maxTotal}" />
-	</bean>
+	</bean> -->
 	
 	<aop:config>
 		<aop:pointcut id="saveOperation" expression="execution(* *..*Dao*..*(..))" />

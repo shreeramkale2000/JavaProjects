@@ -71,11 +71,11 @@
 		</dependency> -->
 
 		<!-- Derby Embedded Driver -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>${derby.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -393,6 +393,17 @@
 						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
 						<version>9.2.11.v20150529</version>
+						
+						<dependencies>
+							
+							<!-- Derby Embedded Driver -->
+							<dependency>
+								<groupId>org.apache.derby</groupId>
+								<artifactId>derby</artifactId>
+								<version>${derby.version}</version>
+							</dependency>
+							
+						</dependencies>
 
 						<executions>
 							<execution>

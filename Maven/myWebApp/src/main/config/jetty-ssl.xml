@@ -2,6 +2,20 @@
 <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
 
 <Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+	<New id="jndidatasource" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg />
+		<Arg>java:/DerbyEmbedDS</Arg>
+		<Arg>
+			<New class="org.apache.derby.jdbc.EmbeddedDataSource">
+				<Set name="DatabaseName">target\ritvik_db</Set>
+				<!-- <Set name="createDatabase">create</Set> -->
+				<Set name="user">sa</Set>
+				<Set name="password">sa</Set>
+			</New>
+		</Arg>
+	</New>
+	
     <!-- Force all communication over secure channels. -->
     <Set name="handler">
         <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
