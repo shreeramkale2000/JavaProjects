@@ -53,7 +53,7 @@
 
 	<!-- maven help:effective-pom -->
 	<build>
-		<finalName>myWebServiceCxfSecureClient</finalName>
+		<finalName>myWebServiceCxfClient</finalName>
 
 		<plugins>
 			<plugin>
