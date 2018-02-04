@@ -42,8 +42,14 @@
 		
 	</jaxws:client>
 	
+	<bean name="fakeX509TrustManager" class="org.ritvik.cxf.common.FakeX509TrustManager" />
+	
 	<!-- Settings to Disable Host Name Validation in https endpoints -->
 	<http:conduit name="{http://ritvik.org/wsdl/calculator}CalculatorServicePort.http-conduit">
-		<http:tlsClientParameters disableCNCheck="true" />
+		
+		<http:tlsClientParameters disableCNCheck="true" >
+			<sec:trustManagers ref="fakeX509TrustManager" />
+		</http:tlsClientParameters>
+		
 	</http:conduit>
 </beans>

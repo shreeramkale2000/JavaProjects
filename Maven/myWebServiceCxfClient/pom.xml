@@ -336,7 +336,7 @@
 									<workingDirectory>${project.build.directory}</workingDirectory>
 									<executable>java</executable>
 									<arguments>
-										<argument>-Djavax.net.ssl.trustStore=ssl-truststore.jks</argument>
+										<!-- <argument>-Djavax.net.ssl.trustStore=ssl-truststore.jks</argument> -->
 										<argument>-jar</argument>
 										<argument>${project.build.finalName}.jar</argument>
 									</arguments>
