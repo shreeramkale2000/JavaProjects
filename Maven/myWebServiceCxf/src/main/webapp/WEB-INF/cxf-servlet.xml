@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+			
+	<context:component-scan base-package="org.ritvik.cxf" scoped-proxy="no" />
+	
+	<context:annotation-config />
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations" >
+			<list>
+				<value>classpath:Application.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="stackTraceWriter" class="java.io.StringWriter" />
+	
+	<bean id="addResponse" class="org.ritvik.wsdl.calculator.CalResponseType" scope="prototype" >
+		<property name="respCode" value="${default.error.code}" />
+		<property name="respMsg" value="${default.error.desc}" />
+	</bean>
+
+	<jaxws:endpoint xmlns:cal="http://ritvik.org/wsdl/calculator"
+		id="cxfService" address="/CalculatorService" serviceName="cal:CalculatorService"
+		endpointName="cal:CalculatorServicePort" implementor="org.ritvik.cxf.service.CxfService"
+		wsdlLocation="WEB-INF/wsdl/CalculatorService.wsdl">
+
+		<jaxws:properties>
+			<entry key="schema-validation-enabled" value="true" />
+		</jaxws:properties>
+		
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+		
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+		</jaxws:inInterceptors>
+		
+		<jaxws:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+		</jaxws:outInterceptors>
+		
+	</jaxws:endpoint>
+	
+</beans>
