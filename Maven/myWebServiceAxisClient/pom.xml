@@ -12,7 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
-		<start-class> org.ritvik.axis.client.AxisClient</start-class>
+		<start-class>org.ritvik.axis.client.AxisClient</start-class>
 	</properties>
 
 	<dependencies>
@@ -106,6 +106,7 @@
 							<packageSpace>org.ritvik.wsdl.calculator</packageSpace>
 							<noWrapped>true</noWrapped>
 							<testCases>false</testCases>
+							<allElements>true</allElements>
 						</configuration>
 					</execution>
 
