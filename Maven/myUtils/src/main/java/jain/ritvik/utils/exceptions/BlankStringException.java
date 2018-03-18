@@ -1,4 +1,4 @@
-package org.ritvik.utils.exceptions;
+package jain.ritvik.utils.exceptions;
 
 public class BlankStringException extends Exception {
 

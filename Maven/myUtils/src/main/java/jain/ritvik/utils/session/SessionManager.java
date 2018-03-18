@@ -1,11 +1,11 @@
-package org.ritvik.utils.session;
+package jain.ritvik.utils.session;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import org.ritvik.utils.common.Constants;
-import org.ritvik.utils.exceptions.MaxUsersExceededException;
+import jain.ritvik.utils.common.Constants;
+import jain.ritvik.utils.exceptions.MaxUsersExceededException;
 
 public class SessionManager {
 

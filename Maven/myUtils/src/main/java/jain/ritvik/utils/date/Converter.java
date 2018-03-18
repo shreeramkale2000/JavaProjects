@@ -1,4 +1,4 @@
-package org.ritvik.utils.date;
+package jain.ritvik.utils.date;
 
 import java.io.Serializable;
 import java.text.DateFormat;

@@ -1,4 +1,4 @@
-package org.ritvik.utils.connectors;
+package jain.ritvik.utils.connectors;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,8 +9,8 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import org.ritvik.utils.common.Errors;
-import org.ritvik.utils.exceptions.JNDINotSetException;
+import jain.ritvik.utils.common.Errors;
+import jain.ritvik.utils.exceptions.JNDINotSetException;
 
 public class DBConnectionManager {
 

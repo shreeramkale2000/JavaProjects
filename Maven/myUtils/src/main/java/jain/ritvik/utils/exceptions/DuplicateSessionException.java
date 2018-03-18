@@ -1,20 +1,19 @@
-package org.ritvik.utils.exceptions;
+package jain.ritvik.utils.exceptions;
 
-public class JNDINotSetException extends Exception {
-	
+public class DuplicateSessionException extends Exception {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public JNDINotSetException() {
+	public DuplicateSessionException() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
-
-	public JNDINotSetException(String sError) {
+	
+	public DuplicateSessionException(String sError) {
 		// TODO Auto-generated constructor stub
 		super(sError);
 	}
-	
 }

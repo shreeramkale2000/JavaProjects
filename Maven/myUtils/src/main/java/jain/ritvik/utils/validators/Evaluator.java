@@ -1,12 +1,12 @@
-package org.ritvik.utils.validators;
+package jain.ritvik.utils.validators;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.ritvik.utils.common.Errors;
-import org.ritvik.utils.exceptions.BlankStringException;
+import jain.ritvik.utils.common.Errors;
+import jain.ritvik.utils.exceptions.BlankStringException;
 
 public class Evaluator implements Serializable{
 

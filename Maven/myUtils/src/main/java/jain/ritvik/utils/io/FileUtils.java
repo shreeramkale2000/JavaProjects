@@ -1,4 +1,4 @@
-package org.ritvik.utils.io;
+package jain.ritvik.utils.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -13,9 +13,9 @@ import java.util.List;
 import org.apache.commons.io.filefilter.MagicNumberFileFilter;
 import org.apache.log4j.Logger;
 
-import org.ritvik.utils.common.Constants;
-import org.ritvik.utils.exceptions.InvalidFileFormatException;
-import org.ritvik.utils.validators.Evaluator;
+import jain.ritvik.utils.common.Constants;
+import jain.ritvik.utils.exceptions.InvalidFileFormatException;
+import jain.ritvik.utils.validators.Evaluator;
 
 public class FileUtils implements Serializable {
 

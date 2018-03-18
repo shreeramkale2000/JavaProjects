@@ -1,4 +1,4 @@
-package org.ritvik.utils.session;
+package jain.ritvik.utils.session;
 
 public class SessionBO {
 

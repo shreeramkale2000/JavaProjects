@@ -1,4 +1,4 @@
-package org.ritvik.utils.crypto;
+package jain.ritvik.utils.crypto;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -12,9 +12,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.ritvik.utils.common.Constants;
-import org.ritvik.utils.exceptions.BlankStringException;
-import org.ritvik.utils.validators.Evaluator;
+import jain.ritvik.utils.common.Constants;
+import jain.ritvik.utils.exceptions.BlankStringException;
+import jain.ritvik.utils.validators.Evaluator;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;

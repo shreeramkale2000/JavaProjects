@@ -1,4 +1,4 @@
-package org.ritvik.utils.common;
+package jain.ritvik.utils.common;
 
 import java.io.Serializable;
 

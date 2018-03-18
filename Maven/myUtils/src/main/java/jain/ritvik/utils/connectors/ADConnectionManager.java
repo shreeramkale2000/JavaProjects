@@ -1,4 +1,4 @@
-package org.ritvik.utils.connectors;
+package jain.ritvik.utils.connectors;
 
 import java.io.Serializable;
 import java.util.Hashtable;

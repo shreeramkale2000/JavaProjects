@@ -28,8 +28,6 @@
 			</list>
 		</property>
 	</bean>
-    
-	<bean id="transformer" class="org.ritvik.utils.crypto.Transformer" />
 	
 	<bean id="stackTraceWriter" class="java.io.StringWriter" />
 	
