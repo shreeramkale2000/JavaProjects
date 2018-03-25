@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+   
+	<localRepository>D:/Development/Programs/apache-maven-repository</localRepository>
+
+	<servers>
+	
+		<server>
+			<username>admin</username>
+			<password>rit@1234</password>
+			<id>central</id>
+		</server>
+
+		<server>
+			<username>admin</username>
+			<password>rit@1234</password>
+			<id>snapshots</id>
+		</server>
+		
+		<server>
+			<username>admin</username>
+			<password>rit@1234</password>
+			<id>internal</id>
+		</server>
+
+	</servers>
+
+	<profiles>
+
+		<profile>
+		
+			<id>artifactory</id>
+			
+			<repositories>
+				<repository>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<id>central</id>
+					<name>libs-release</name>
+					<url>http://localhost:8085/artifactory/libs-release</url>
+				</repository>
+				<repository>
+					<snapshots />
+					<id>snapshots</id>
+					<name>libs-snapshot</name>
+					<url>http://localhost:8085/artifactory/libs-snapshot</url>
+				</repository>
+			</repositories>
+			
+			<pluginRepositories>
+				<pluginRepository>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<id>central</id>
+					<name>libs-release</name>
+					<url>http://localhost:8085/artifactory/libs-release</url>
+				</pluginRepository>
+				<pluginRepository>
+					<snapshots />
+					<id>snapshots</id>
+					<name>libs-snapshot</name>
+					<url>http://localhost:8085/artifactory/libs-snapshot</url>
+				</pluginRepository>
+			</pluginRepositories>
+			
+		</profile>
+		
+		<profile>
+			<id>archiva</id>
+
+			<repositories>
+				<repository>
+					<id>internal</id>
+					<name>Archiva Managed Internal Repository</name>
+					<url>http://localhost:8088/repository/internal/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+
+				<repository>
+					<id>snapshots</id>
+					<name>Archiva Managed Snapshot Repository</name>
+					<url>http://localhost:8088/repository/snapshots/</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+
+			<pluginRepositories>
+				<pluginRepository>
+					<id>internal</id>
+					<name>Archiva Managed Internal Repository</name>
+					<url>http://localhost:8088/repository/internal/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+
+				<pluginRepository>
+					<id>snapshots</id>
+					<name>Archiva Managed Snapshot Repository</name>
+					<url>http://localhost:8088/repository/snapshots/</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+
+		</profile>
+
+		<profile>
+			<id>jboss-eap-repository</id>
+			
+			<repositories>
+				<repository>
+					<id>jboss-eap-repository</id>
+					<url>file:///D:/Development/Programs/jboss-eap-7.0.0.GA-maven-repository/maven-repository</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			
+			<pluginRepositories>
+				<pluginRepository>
+					<id>jboss-eap-plugin-repository</id>
+					<url>file:///D:/Development/Programs/jboss-eap-7.0.0.GA-maven-repository/maven-repository</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+			
+		</profile>
+
+	</profiles>
+
+	<!-- activeProfiles
+   | List of profiles that are active for all builds.
+   |-->
+	<activeProfiles>
+		<activeProfile>artifactory</activeProfile>
+		<!--<activeProfile>archiva</activeProfile>-->
+		<!--<activeProfile>jboss-eap-repository</activeProfile>-->
+	</activeProfiles>
+
+</settings>
