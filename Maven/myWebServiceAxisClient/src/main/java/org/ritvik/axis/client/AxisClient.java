@@ -47,7 +47,7 @@ public class AxisClient {
 		List chain = null;
 		HandlerInfo info = null;
 		try {
-			url = new URL("https://localhost:8087/myWebServiceCxfSecure/CxfServices/CalculatorService");
+			url = new URL("https://localhost:8084/myWebServiceCxfSecure/CxfServices/CalculatorService");
 			locator = new CalculatorServiceLocator();
 			
 			handlerRegistry = locator.getHandlerRegistry();

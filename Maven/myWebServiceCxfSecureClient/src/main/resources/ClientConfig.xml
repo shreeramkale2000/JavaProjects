@@ -26,7 +26,7 @@
 	</bean>
 	
 	<jaxws:client name="{http://ritvik.org/wsdl/calculator}CalculatorServicePort" createdFromAPI="true"
-		address="https://localhost:8087/myWebServiceCxfSecure/CxfServices/CalculatorService" >
+		address="https://localhost:8084/myWebServiceCxfSecure/CxfServices/CalculatorService" >
 		
 		<jaxws:properties>
 			<entry key="ws-security.username" value="ITEF000004" />
