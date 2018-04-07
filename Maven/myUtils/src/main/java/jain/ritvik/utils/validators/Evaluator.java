@@ -39,11 +39,6 @@ public class Evaluator implements Serializable{
 		return (sValue == null ? "" : sValue);
 	}
 
-	public BigDecimal checkBigDecimal(BigDecimal decimal) {
-		return (decimal == null || decimal.equals("") ? new BigDecimal(0)
-				: decimal);
-	}
-
 	public BigDecimal checkBigDecimal(String sValue) {
 
 		return (checkString(sValue).equals("") ? new BigDecimal(0)

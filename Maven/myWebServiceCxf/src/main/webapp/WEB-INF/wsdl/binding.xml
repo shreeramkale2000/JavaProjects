@@ -1,3 +1,4 @@
+<!DOCTYPE xml>
 <bindings
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
     wsdlLocation="CalculatorService.wsdl"

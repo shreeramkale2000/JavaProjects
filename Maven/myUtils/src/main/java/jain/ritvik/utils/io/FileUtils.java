@@ -17,6 +17,7 @@ import jain.ritvik.utils.common.Constants;
 import jain.ritvik.utils.exceptions.InvalidFileFormatException;
 import jain.ritvik.utils.validators.Evaluator;
 
+@SuppressWarnings("resource")
 public class FileUtils implements Serializable {
 
 	/**
