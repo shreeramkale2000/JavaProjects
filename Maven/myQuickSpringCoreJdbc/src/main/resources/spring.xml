@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<context:annotation-config />
+	
+	<context:component-scan base-package="com.ritvik" scoped-proxy="no" />
+	
+	<aop:aspectj-autoproxy />
+	
+	<bean name="demoAspect" class="com.ritvik.spring.DemoAspect" />
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations" >
+			<list>
+				<value>message.properties</value>
+				<value>file:database.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="stackTraceWriter" class="java.io.StringWriter" />
+	
+	<bean id="dataSource" class="com.ritvik.dao.MyCustomBasicDataSource" >
+		<property name="driverClassName" value="${db.driverClassName}" />
+		<property name="url" value="${db.url}${db.path}\\${db.name}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<property name="defaultAutoCommit" value="${db.defaultAutoCommit}"/>
+		<property name="initialSize" value="${db.initialSize}" />
+		<property name="minIdle" value="${db.minIdle}"/>
+		<property name="maxIdle" value="${db.maxIdle}"/>
+		<property name="maxTotal" value="${db.maxTotal}" />
+	</bean>
+	
+	<aop:config>
+		<aop:pointcut id="saveOperation" expression="execution(* *..*Dao*..*(..))" />
+		<aop:advisor pointcut-ref="saveOperation" advice-ref="txAdvice" />
+	</aop:config>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="create*" />
+			<tx:method name="post*" />
+			<tx:method name="delete*" />
+			<tx:method name="put*" />
+			<tx:method name="get*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+		<!--<property name="exceptionTranslator" ref="customJdbcSQLErrorCodesTranslator" />-->
+	</bean>
+	
+	<bean id="jdbcDaoSupportImpl" class="com.ritvik.dao.JdbcDaoSupportImpl" >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean>
+	
+</beans>
