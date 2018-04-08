@@ -495,6 +495,9 @@
 								<configuration>
 									<workingDirectory>${project.build.directory}</workingDirectory>
 									<executable>java</executable>
+									<environmentVariables>
+										<DECODE_KEY>jaas is the way</DECODE_KEY>
+									</environmentVariables>
 									<arguments>
 										<argument>-jar</argument>
 										<argument>${project.build.finalName}.jar</argument>
