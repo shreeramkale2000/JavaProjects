@@ -17,6 +17,7 @@
 		<commons.dbcp2.version>2.1.1</commons.dbcp2.version>
 		<commons.pool2.version>2.4.2</commons.pool2.version>
 		<derby.version>10.13.1.1</derby.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<aspectjweaver.version>1.8.10</aspectjweaver.version>
 		<aopalliance.version>1.0</aopalliance.version>
@@ -50,18 +51,17 @@
 			<version>${commons.pool2.version}</version>
 		</dependency>
 
-		<!-- Derby Network Driver -->
-		<!-- <dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbyclient</artifactId>
-			<version>${derby.version}</version>
-		</dependency> -->
-
 		<!-- Derby Embedded Driver -->
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>${derby.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>
@@ -69,38 +69,13 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-orm</artifactId>
+		    <version>${spring.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectjweaver.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>aopalliance</groupId>
-			<artifactId>aopalliance</artifactId>
-			<version>${aopalliance.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-			<version>${cglib.version}</version>
-			<!-- Not Required. Already Included in Spring Core Library -->
-			<exclusions>
-				<exclusion>
-					<groupId>org.ow2.asm</groupId>
-					<artifactId>asm</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
+		
 	</dependencies>
 
 	<!-- maven help:effective-pom -->
@@ -495,6 +470,9 @@
 								<configuration>
 									<workingDirectory>${project.build.directory}</workingDirectory>
 									<executable>java</executable>
+									<environmentVariables>
+										<DECODE_KEY>jaas is the way</DECODE_KEY>
+									</environmentVariables>
 									<arguments>
 										<argument>-jar</argument>
 										<argument>${project.build.finalName}.jar</argument>
