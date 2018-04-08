@@ -445,7 +445,7 @@
 						
 						<dependencies>
 							
-							<!-- Derby Embedded Driver -->
+							<!-- Derby Embedded Driver for Data Source in Jetty-->
 							<dependency>
 								<groupId>org.apache.derby</groupId>
 								<artifactId>derby</artifactId>
@@ -456,6 +456,20 @@
 
 						<executions>
 							<execution>
+								<id>stop-jetty</id>
+								<phase>pre-clean</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+
+								<configuration>
+									<stopPort>8186</stopPort>
+									<stopKey>secret</stopKey>
+									<stopWait>10</stopWait>
+								</configuration>
+							</execution>
+							
+							<execution>
 								<id>run-jetty</id>
 								<phase>clean</phase>
 								<goals>
@@ -463,6 +477,8 @@
 								</goals>
 
 								<configuration>
+									<stopPort>8186</stopPort>
+									<stopKey>secret</stopKey>
 									<war>${project.build.directory}/${project.build.finalName}.war</war>
 									<webApp>
 										<contextPath>/myWebServiceCxfSecure</contextPath>
