@@ -74,19 +74,6 @@
 			<systemPath>${basedir}\lib\myUtils.jar</systemPath>
 		</dependency>-->
 
-		<dependency>
-			<groupId>org.ritvik</groupId>
-			<artifactId>myUtils</artifactId>
-			<version>1.0</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.picketbox</groupId>
-    		<artifactId>picketbox</artifactId>
-    		<version>5.0.2.Final</version>
-    		<type>jar</type>
-		</dependency>
-
 	</dependencies>
 
 	<!-- maven help:effective-pom -->
@@ -298,7 +285,7 @@
 				
 				<plugins>
 					<!-- Example of Settings System Properties -->
-					<plugin>
+					<!-- <plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>properties-maven-plugin</artifactId>
 						<version>1.0.0</version>
@@ -317,14 +304,16 @@
 								</configuration>
 							</execution>
 						</executions>
-					</plugin>
+					</plugin> -->
 
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
 						<version>1.6.0</version>
 						<executions>
-							<execution>
+							
+							<!-- Example of Maven Execute java goal -->
+							<!-- <execution>
 								<id>exec-java</id>
 								<phase>test</phase>
 								
@@ -335,13 +324,20 @@
 								<configuration>
 									<classpathScope>test</classpathScope>
 									<mainClass>${start-class}</mainClass>
+									<systemProperties>
+										<systemProperty>
+											<key>user_path</key>
+											<value>D:\User</value>
+										</systemProperty>
+									</systemProperties>
 									<arguments>
 										<argument>Ritvik</argument>
 										<argument>Jain</argument>
 									</arguments>
 								</configuration>
-							</execution>
+							</execution> -->
 							
+							<!-- Example of Maven Execute exec goal -->
 							<execution>
 								<id>exec-runnable-java</id>
 								<phase>package</phase>
@@ -353,6 +349,11 @@
 								<configuration>
 									<workingDirectory>${project.build.directory}</workingDirectory>
 									<executable>java</executable>
+									
+									<environmentVariables>
+										<user_path>D:\User</user_path>
+									</environmentVariables>
+									
 									<arguments>
 										<argument>-jar</argument>
 										<argument>${project.build.finalName}.jar</argument>

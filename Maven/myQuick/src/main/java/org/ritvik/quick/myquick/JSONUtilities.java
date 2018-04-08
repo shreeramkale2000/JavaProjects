@@ -1,30 +1,22 @@
 package org.ritvik.quick.myquick;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-@SuppressWarnings("deprecation")
 public class JSONUtilities {
 
-    private static JsonFactory factory = new JsonFactory();
     private static ObjectMapper objmapper = new ObjectMapper();
 
     //Converting Objects To JSON
     public static String toJson(Object pojo) throws IOException {
-        StringWriter swriter = new StringWriter();
-        JsonGenerator gen = factory.createJsonGenerator(swriter);
-        gen.useDefaultPrettyPrinter();
-        
-        objmapper.writeValue(gen, pojo);
-        gen.close();
-        return swriter.toString();
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        objmapper.writeValue(baos, pojo);
+        return baos.toString();
     }
 
     //Converting JSON To pojo
@@ -36,4 +28,5 @@ public class JSONUtilities {
     public static ObjectNode fromJson(String resJson) throws IOException{
         return (ObjectNode) objmapper.readTree(resJson);
     }
+    
 }

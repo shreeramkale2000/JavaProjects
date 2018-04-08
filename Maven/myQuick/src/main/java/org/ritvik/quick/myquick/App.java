@@ -1,25 +1,22 @@
 package org.ritvik.quick.myquick;
 
 import java.io.IOException;
-import java.util.Date;
-
-import org.ritvik.utils.date.Formatter;
 
 /**
- * Hello world!
- *
+ * Standalone Jackson Example
  */
 public class App {
 	public static void main(String[] args) throws IOException {
-		System.out.println("Environment Variable " + System.getenv("envrn"));
-		System.out.println("User Path " + System.getProperty("user_path"));
+		System.out.println("System Property " + System.getProperty("user_path"));
+		System.out.println("Environment Variable " + System.getenv("user_path"));
 		
-		JsonPojo pojo = new JsonPojo();
-		pojo.setFirstName(args[0]);
-		pojo.setLastName(args[1]);
-		System.out.println(JSONUtilities.toJson(pojo));
+		JsonPojo reqPojo = new JsonPojo();
+		reqPojo.setFirstName(args[0]);
+		reqPojo.setLastName(args[1]);
+		String resJson = JSONUtilities.toJson(reqPojo);
+		System.out.println(resJson);
 		
-		Formatter format = new Formatter();
-		System.out.println(format.getFormattedDate("dd-MM-yy", new Date()));
+		JsonPojo resPojo = (JsonPojo) JSONUtilities.fromJson(resJson, JsonPojo.class);
+		System.out.println(resPojo.getFirstName());
 	}
 }
