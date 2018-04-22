@@ -14,7 +14,7 @@ public class Employee {
 	@Column(name = "ID")
 	private int id;
 	
-	@Column(name = "NAME", length = 50, nullable = false)
+	@Column(name = "NAME", length = 50, nullable = false, unique = false)
 	private String name;
 	
 	public int getId() {

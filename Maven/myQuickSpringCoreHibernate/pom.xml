@@ -6,7 +6,7 @@
 	<artifactId>myQuickSpringCoreHibernate</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>Maven Spring Core</name>
+	<name>Spring Core Hibernate</name>
 	<description>Sample Maven Spring Core App Executed from main method. Uses Hibernate</description>
 
 	<properties>
@@ -19,9 +19,6 @@
 		<derby.version>10.13.1.1</derby.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
-		<aspectjweaver.version>1.8.10</aspectjweaver.version>
-		<aopalliance.version>1.0</aopalliance.version>
-		<cglib.version>3.2.5</cglib.version>
 	</properties>
 
 	<dependencies>
@@ -38,7 +35,8 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-
+		
+		<!-- Connection Pooling -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
@@ -58,11 +56,7 @@
 			<version>${derby.version}</version>
 		</dependency>
 		
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-core</artifactId>
-		    <version>${hibernate.version}</version>
-		</dependency>
+		<!-- Spring -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -70,11 +64,19 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
+		 <!-- persistence -->
+		
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-orm</artifactId>
-		    <version>${spring.version}</version>
-		</dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 		
 	</dependencies>
 
