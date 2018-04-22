@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.ritvik.model.Employee;
 
 @Repository("employeeDao")
-public class EmployeeDao extends HibernateDaoImpl {
+public class EmployeeDao extends CommonDaoImpl {
 
 	public Integer saveEmployee(Employee emp) {
 		return (Integer) getCurrentSession().save(emp);
