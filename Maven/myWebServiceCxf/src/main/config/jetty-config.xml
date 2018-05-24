@@ -100,4 +100,21 @@
             </Array>
         </Arg>
     </Call>
+    
+    <Call class="java.lang.System" name="setProperties">
+		<Arg>
+			<New class="java.util.Properties">
+				<Call name="putAll">
+					<Arg>
+						<Call class="java.lang.System" name="getProperties" />
+					</Arg>
+				</Call>
+				<Call name="setProperty">
+					<Arg>run_mode</Arg>
+					<Arg>staging</Arg>
+				</Call>
+			</New>
+		</Arg>
+	</Call>
+	
 </Configure>
