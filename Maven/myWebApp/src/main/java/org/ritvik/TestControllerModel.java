@@ -14,7 +14,7 @@ public class TestControllerModel {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String printHello(ModelMap model) {
-		logger.info("TestControllerModel printHello called...");
+		logger.debug("TestControllerModel printHello called...");
 		
 		model.addAttribute("message", "Hello Spring MVC Framework!");
 		return "hello";

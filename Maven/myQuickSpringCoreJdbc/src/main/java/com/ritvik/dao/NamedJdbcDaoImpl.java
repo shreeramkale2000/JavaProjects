@@ -32,7 +32,7 @@ public class NamedJdbcDaoImpl implements NamedJdbcDao {
     @Override
 	public int getDataCount(){
 		int size = getNamedParameterJdbcTemplate().query("SELECT * FROM EMP", new EmpRowMapper()).size();
-		logger.info("Data Size : " + size);
+		logger.debug("Data Size : " + size);
 		return size;
 	}
     
@@ -42,10 +42,10 @@ public class NamedJdbcDaoImpl implements NamedJdbcDao {
     	Employee emp = new Employee();
     	emp.setId(id);
     	int size = getNamedParameterJdbcTemplate().update("DELETE FROM EMP WHERE ID = :id", new BeanPropertySqlParameterSource(emp));
-		logger.info(data_delete_msg + size);
+		logger.debug(data_delete_msg + size);
 		
 		String date = getNamedParameterJdbcTemplate().query("VALUES CURRENT_TIMESTAMP", new DateRowMapper()).get(0);
-		logger.info("Current Date - " + date);
+		logger.debug("Current Date - " + date);
 		
 		return size;
 	}

@@ -23,14 +23,14 @@ public class JdbcDaoSupportImpl extends JdbcDaoSupport implements JdbcDaoEx{
 	@Override
 	public int postData(int id, String name){
 		int size = getJdbcTemplate().update("INSERT INTO EMP VALUES (?, ?)", new Object[]{id, name});
-		logger.info(data_insert_msg + size);
+		logger.debug(data_insert_msg + size);
 		return size;
 	}
 	
 	@Override
 	public Employee getData(int id){
 		Employee emp = getJdbcTemplate().queryForObject("SELECT * FROM EMP WHERE ID = ?", new Object[]{id} , new EmpRowMapper()); 
-		logger.info(data_select_msg + emp.getName());
+		logger.debug(data_select_msg + emp.getName());
 		return emp;
 	}
 	

@@ -11,7 +11,7 @@ public class DemoAspect {
 	
 	@Before("execution(public * getData(*))")
 	public void loggingAdvice() {
-		logger.info("Advice Run ");
+		logger.debug("Advice Run ");
 	}
 
 }

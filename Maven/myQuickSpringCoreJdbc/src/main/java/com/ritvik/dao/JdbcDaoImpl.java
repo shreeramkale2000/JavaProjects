@@ -28,14 +28,14 @@ public class JdbcDaoImpl implements JdbcDao {
 	public void createTables(){
 		try {
 			getJdbcTemplate().execute("CREATE TABLE EMP (ID int PRIMARY KEY NOT NULL, NAME varchar(50) NOT NULL)");
-			logger.info("Created Table - EMP");
+			logger.debug("Created Table - EMP");
 			getJdbcTemplate().execute("CREATE TABLE ADDR (ID int NOT NULL,ADDRESS varchar(50) NOT NULL)");
 			getJdbcTemplate().execute("ALTER TABLE ADDR ADD CONSTRAINT ADDR_ID_REF FOREIGN KEY (ID) REFERENCES EMP(ID)");
-			logger.info("Created Table - ADDR");
+			logger.debug("Created Table - ADDR");
 			getJdbcTemplate().execute("INSERT INTO EMP (ID,NAME) VALUES (1,'ritvik')");
 			getJdbcTemplate().execute("INSERT INTO EMP (ID,NAME) VALUES (2,'pallav')");
 			getJdbcTemplate().execute("INSERT INTO ADDR (ID,ADDRESS) VALUES (1,'ghansoli')");
-			logger.info("Sample Data Added");
+			logger.debug("Sample Data Added");
 		} catch (DataAccessException e){
 			e.printStackTrace(new PrintWriter(stackTraceWriter));
 			logger.fatal(stackTraceWriter.toString());

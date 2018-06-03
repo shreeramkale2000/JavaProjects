@@ -32,7 +32,7 @@ public class CxfService implements CalculatorServicePortType {
 	private Logger logger = Logger.getLogger(CxfService.class);
 	
 	public CalResponseType addRequest (AddRequestType addRequest, StandardType header) {
-		logger.info("WS Security Passed for Calculator Service");
+		logger.debug("WS Security Passed for Calculator Service");
 		CalResponseType addResponse = appContext.getBean("addResponse", CalResponseType.class);
 		
 		Calculator parasoftService = appContext.getBean("parasoftService", Calculator.class);

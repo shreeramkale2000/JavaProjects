@@ -1,4 +1,4 @@
-package com.ritvik.dao;
+package com.ritvik.spring;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -21,15 +21,15 @@ public class BusinessLogic {
 	private EmployeeService employeeService;
 
 	public void start() {
-		logger.info("Start");
+		logger.debug("Start");
 		Integer empId = 0;
 
 		Employee emp = new Employee();
 		emp.setName("Ritvik");
 		empId = employeeService.saveEmployee(emp);
-		logger.info("Employee Saved ->" + empId);
+		logger.debug("Employee Saved ->" + empId);
 
-		logger.info("End");
+		logger.debug("End");
 	}
 
 }

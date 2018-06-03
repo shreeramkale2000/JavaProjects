@@ -17,7 +17,7 @@ public class TestControllerRest {
 
 	@RequestMapping(value = "/Employee/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Employee> getEmployee(@PathVariable("id") int id) {
-		logger.info("TestControllerRest getEmployee called...");
+		logger.debug("TestControllerRest getEmployee called...");
 		Employee emp = new Employee(id, "Ritvik");
 
 		return new ResponseEntity<Employee>(emp, HttpStatus.OK);

@@ -44,12 +44,12 @@ public class CxfClient {
 		AddRequestType addRequest = context.getBean("addRequest", AddRequestType.class);
 		StandardType header = context.getBean("header", StandardType.class);
 		CalResponseType resp = null;
-		logger.info("Invoking CalculatorService...");
+		logger.debug("Invoking CalculatorService...");
 		try {
 			resp = port.addRequest(addRequest, header);
-			logger.info(resp.getResult());
-			logger.info(resp.getRespCode());
-			logger.info(resp.getRespMsg());
+			logger.debug(resp.getResult());
+			logger.debug(resp.getRespCode());
+			logger.debug(resp.getRespMsg());
 		} catch (Exception e) {
 			logger.fatal("Invocation failed with the following: " + e.getCause());
 			e.printStackTrace(new PrintWriter(stackTraceWriter));

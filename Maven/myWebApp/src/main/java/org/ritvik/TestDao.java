@@ -28,7 +28,7 @@ public class TestDao {
 			while (rs.next()){
 				date = rs.getString(1);
 			}
-			logger.info("Selected Data " + date);
+			logger.debug("Selected Data " + date);
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 		} finally {

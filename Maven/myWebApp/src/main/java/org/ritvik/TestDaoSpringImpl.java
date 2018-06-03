@@ -35,7 +35,7 @@ public class TestDaoSpringImpl implements TestDaoSpring {
 		String date = "";
 		try {
 			date = getNamedParameterJdbcTemplate().query("VALUES CURRENT_TIMESTAMP", new DateRowMapper()).get(0);
-			logger.info(data_select_msg + date);
+			logger.debug(data_select_msg + date);
 		} catch (Exception e) {
 			e.printStackTrace(new PrintWriter(stackTraceWriter));
 			logger.fatal(stackTraceWriter.toString());
