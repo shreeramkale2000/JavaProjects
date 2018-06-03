@@ -19,7 +19,7 @@ import org.ritvik.wsdl.calculator.StandardType;
  * Program for CXF Client
  */
 public class CxfClient {
-	private Logger logger = Logger.getLogger(CxfClient.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 	private StringWriter stackTraceWriter = new StringWriter();
 	
 	public static void main(String[] args) {
@@ -46,16 +46,16 @@ public class CxfClient {
 		AddRequestType addRequest = context.getBean("addRequest", AddRequestType.class);
 		StandardType header = context.getBean("header", StandardType.class);
 		CalResponseType resp = null;
-		logger.info("Invoking CalculatorService...");
+		logger.debug("Invoking CalculatorService...");
 		try {
 			resp = port.addRequest(addRequest, header);
-			logger.info(resp.getResult());
-			logger.info(resp.getRespCode());
-			logger.info(resp.getRespMsg());
+			logger.debug(resp.getResult());
+			logger.debug(resp.getRespCode());
+			logger.debug(resp.getRespMsg());
 		} catch (Exception e) {
 			logger.fatal("Invocation failed with the following: " + e.getCause());
 			e.printStackTrace(new PrintWriter(stackTraceWriter));
-			logger.debug(stackTraceWriter.toString());
+			logger.fatal(stackTraceWriter.toString());
 			stackTraceWriter.flush();
 		}
 	}

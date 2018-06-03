@@ -26,10 +26,10 @@ public class CxfService implements CalculatorServicePortType {
 	@Value("${default.success.desc}")
 	private String default_success_desc;
 	
-	private Logger logger = Logger.getLogger(CxfService.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 	
 	public CalResponseType addRequest (AddRequestType addRequest, StandardType header) {
-		logger.info("WS Security Passed for Calculator Service");
+		logger.debug("WS Security Passed for Calculator Service");
 		CalResponseType addResponse = appContext.getBean("addResponse", CalResponseType.class);
 		
 		try {
