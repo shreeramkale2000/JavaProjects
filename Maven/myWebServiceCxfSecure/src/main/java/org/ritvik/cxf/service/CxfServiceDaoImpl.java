@@ -19,7 +19,7 @@ public class CxfServiceDaoImpl implements CxfServiceDao{
 	@Autowired
 	private StringWriter stackTraceWriter;
 
-	private Logger logger = Logger.getLogger(CxfServiceDaoImpl.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 
 	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
 		return namedParameterJdbcTemplate;

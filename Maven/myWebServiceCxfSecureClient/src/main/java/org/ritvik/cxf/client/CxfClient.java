@@ -20,7 +20,7 @@ import org.ritvik.wsdl.calculator.StandardType;
  */
 @SuppressWarnings("resource")
 public class CxfClient {
-	private Logger logger = Logger.getLogger(CxfClient.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 	private StringWriter stackTraceWriter = new StringWriter();
 	
 	public static void main(String[] args) {

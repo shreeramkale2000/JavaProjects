@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class MyCustomBasicDataSource extends BasicDataSource {
 
-	private Logger logger = Logger.getLogger(MyCustomBasicDataSource.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 
 	@Autowired
 	private StringWriter stackTraceWriter;

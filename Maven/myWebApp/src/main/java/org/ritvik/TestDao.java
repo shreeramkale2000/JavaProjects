@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 public class TestDao {
 	
-	private Logger logger = Logger.getLogger(TestDao.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 	
 	public String getData () throws SQLException{
 		Connection conn = null;

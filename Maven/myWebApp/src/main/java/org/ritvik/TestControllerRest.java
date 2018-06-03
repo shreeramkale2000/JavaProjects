@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/TestControllerRest")
 public class TestControllerRest {
 
-	private Logger logger = Logger.getLogger(TestControllerRest.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 
 	@RequestMapping(value = "/Employee/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Employee> getEmployee(@PathVariable("id") int id) {

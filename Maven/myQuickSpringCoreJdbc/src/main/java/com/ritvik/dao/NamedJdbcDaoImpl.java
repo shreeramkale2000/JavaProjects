@@ -23,7 +23,7 @@ public class NamedJdbcDaoImpl implements NamedJdbcDao {
 	@Value("${data.delete.msg}")
 	private String data_delete_msg;
 	
-	private Logger logger = Logger.getLogger(NamedJdbcDaoImpl.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
  
     public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
         return namedParameterJdbcTemplate;

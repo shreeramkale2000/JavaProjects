@@ -24,7 +24,7 @@ public class TestDaoSpringImpl implements TestDaoSpring {
 	@Value("${data.select.msg}")
 	private String data_select_msg;
 
-	private Logger logger = Logger.getLogger(TestDaoSpringImpl.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 
 	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
 		return namedParameterJdbcTemplate;

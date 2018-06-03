@@ -10,7 +10,7 @@ import org.springframework.ui.ModelMap;
 @RequestMapping("/TestControllerModel")
 public class TestControllerModel {
 	
-	private Logger logger = Logger.getLogger(TestControllerModel.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String printHello(ModelMap model) {

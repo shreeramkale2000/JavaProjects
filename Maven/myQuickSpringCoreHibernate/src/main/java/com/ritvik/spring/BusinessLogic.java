@@ -1,7 +1,5 @@
 package com.ritvik.spring;
 
-import java.io.StringWriter;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,10 +10,7 @@ import com.ritvik.service.EmployeeService;
 @Repository("businessLogic")
 public class BusinessLogic {
 
-	private Logger logger = Logger.getLogger(BusinessLogic.class);
-
-	@Autowired
-	private StringWriter stackTraceWriter;
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 
 	@Autowired
 	private EmployeeService employeeService;

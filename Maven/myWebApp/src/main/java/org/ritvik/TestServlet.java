@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private Logger logger = Logger.getLogger(TestServlet.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 
     /**
      * Default constructor. 

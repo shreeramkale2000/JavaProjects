@@ -18,7 +18,7 @@ public class JdbcDaoImpl implements JdbcDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private Logger logger = Logger.getLogger(JdbcDaoImpl.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 	
 	public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;

@@ -18,7 +18,7 @@ public class JdbcDaoSupportImpl extends JdbcDaoSupport implements JdbcDaoEx{
 	@Value("${data.insert.msg}")
 	private String data_insert_msg;
 	
-	private Logger logger = Logger.getLogger(JdbcDaoSupportImpl.class);
+	private Logger logger = Logger.getLogger("org.ritvik.processLog");
 	
 	@Override
 	public int postData(int id, String name){
