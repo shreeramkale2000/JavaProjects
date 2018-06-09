@@ -2,7 +2,7 @@ package com.ritvik.dao;
 
 import com.ritvik.spring.Employee;
 
-public interface JdbcDaoEx {
+public interface JdbcDaoSuport {
 	
 	public int postData(int id, String name);
 	

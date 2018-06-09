@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ritvik.dao.JdbcDaoSupportImpl.EmpRowMapper;
+import com.ritvik.dao.JdbcDaoSuportImpl.EmpRowMapper;
 import com.ritvik.spring.Employee;
 
 @Repository("namedJdbcDaoImpl")

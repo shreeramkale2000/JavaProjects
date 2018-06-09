@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 //import com.ritvik.dao.JdbcDao;
-import com.ritvik.dao.JdbcDaoEx;
+import com.ritvik.dao.JdbcDaoSuport;
 import com.ritvik.dao.NamedJdbcDao;
 
 @Repository("businessLogic")
@@ -14,7 +14,7 @@ public class BusinessLogic {
 	//private JdbcDao jdbcDaoImpl;
 	
 	@Autowired
-	private JdbcDaoEx jdbcDaoSupportImpl;
+	private JdbcDaoSuport jdbcDaoSuportImpl;
 	
 	@Autowired
 	private NamedJdbcDao namedJdbcDaoImpl;
@@ -25,8 +25,8 @@ public class BusinessLogic {
 		namedJdbcDaoImpl.getDataCount();
 		namedJdbcDaoImpl.deleteData(999999999);
 		
-		jdbcDaoSupportImpl.postData(999999999, "051DISCREQ999999999.xml");
-		jdbcDaoSupportImpl.getData(999999999).getName();
+		jdbcDaoSuportImpl.postData(999999999, "051DISCREQ999999999.xml");
+		jdbcDaoSuportImpl.getData(999999999).getName();
 	}
 
 }

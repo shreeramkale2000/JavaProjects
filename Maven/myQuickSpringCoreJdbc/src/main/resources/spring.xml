@@ -67,7 +67,7 @@
 		<!--<property name="exceptionTranslator" ref="customJdbcSQLErrorCodesTranslator" />-->
 	</bean>
 	
-	<bean id="jdbcDaoSupportImpl" class="com.ritvik.dao.JdbcDaoSupportImpl" >
+	<bean id="jdbcDaoSupportImpl" class="com.ritvik.dao.JdbcDaoSuportImpl" >
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	

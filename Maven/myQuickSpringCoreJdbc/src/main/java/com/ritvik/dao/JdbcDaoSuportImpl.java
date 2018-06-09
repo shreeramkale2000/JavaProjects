@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.ritvik.spring.Employee;
 
-public class JdbcDaoSupportImpl extends JdbcDaoSupport implements JdbcDaoEx{
+public class JdbcDaoSuportImpl extends JdbcDaoSupport implements JdbcDaoSuport{
 	
 	@Value("${data.select.msg}")
 	private String data_select_msg;
