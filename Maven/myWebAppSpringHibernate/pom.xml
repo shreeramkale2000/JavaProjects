@@ -1,0 +1,286 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ritvik.webapp</groupId>
+	<artifactId>myWebAppSpringHibernate</artifactId>
+	<packaging>war</packaging>
+	<version>1.0</version>
+	<name>Maven Webapp Spring Hibernate</name>
+	<description>Sample Maven Webapp with Spring Hibernate</description>
+
+	<contributors>
+		<contributor>
+			<name>Ritvik Jain</name>
+		</contributor>
+	</contributors>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<spring.version>5.0.8.RELEASE</spring.version>
+		<hibernate.version>5.3.5.Final</hibernate.version>
+		<jackson.version>2.9.6</jackson.version>
+		<cxf.version>3.2.6</cxf.version>
+		<slf4j.version>1.7.25</slf4j.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<!-- maven help:effective-pom -->
+	<build>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>default-clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>default-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+
+				<executions>
+					<execution>
+						<id>default-compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+
+						<configuration>
+							<source>${java.version}</source>
+							<target>${java.version}</target>
+						</configuration>
+
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>default-war</id>
+						<phase>package</phase>
+						<goals>
+							<goal>war</goal>
+						</goals>
+
+						<configuration>
+							<archive>
+								<manifest>
+									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+
+				<executions>
+					<execution>
+						<id>default-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+
+						<configuration>
+							<skipTests>true</skipTests>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>default-install</id>
+						<phase>install</phase>
+						<goals>
+							<goal>install</goal>
+						</goals>
+
+						<configuration>
+							<createChecksum>true</createChecksum>
+							<skip>false</skip>
+						</configuration>
+
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+
+		<profile>
+			<id>Run</id>
+
+			<properties>
+				<derby.version>10.14.2.0</derby.version>
+				<jetty.version>9.4.9.v20180320</jetty.version>
+			</properties>
+
+			<build>
+				<defaultGoal>clean package</defaultGoal>
+
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>${jetty.version}</version>
+
+						<dependencies>
+							<!-- Derby Embedded Driver for Data Source in Jetty-->
+							<dependency>
+								<groupId>org.apache.derby</groupId>
+								<artifactId>derby</artifactId>
+								<version>${derby.version}</version>
+							</dependency>
+						</dependencies>
+
+						<executions>
+							<execution>
+								<id>stop-jetty</id>
+								<phase>pre-clean</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+
+								<configuration>
+									<stopPort>8060</stopPort>
+									<stopKey>foo</stopKey>
+									<stopWait>10</stopWait>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>run-jetty</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run-war</goal>
+								</goals>
+
+								<configuration>
+									<stopPort>8060</stopPort>
+									<stopKey>foo</stopKey>
+									<war>${project.build.directory}/${project.build.finalName}.war</war>
+									<webApp>
+										<contextPath>/myWebApp</contextPath>
+									</webApp>
+									<jettyConfig>${project.basedir}/src/main/config/jetty-config.xml</jettyConfig>
+									<scanIntervalSeconds>10</scanIntervalSeconds>
+									<systemProperties>
+										<systemProperty>
+											<key>dummy</key>
+											<value>test</value>
+										</systemProperty>
+									</systemProperties>
+								</configuration>
+							</execution>
+
+						</executions>
+
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+
+	</profiles>
+</project>
