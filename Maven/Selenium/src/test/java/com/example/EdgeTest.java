@@ -14,11 +14,11 @@ public class EdgeTest {
 	@Test
 	public void testEasy() throws InterruptedException {
 		driver.get("http://www.google.com/xhtml");
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		WebElement searchBox = driver.findElement(By.name("q"));
 		searchBox.sendKeys("EdgeDriver");
 		searchBox.submit();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 	}
 
 	@BeforeTest
