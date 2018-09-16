@@ -299,41 +299,6 @@
 
 			</build>
 		</profile>
-		
-		<profile>
-			<id>TestWeb</id>
-
-			<build>
-				<defaultGoal>pre-clean</defaultGoal>
-
-				<plugins>
-					
-					<plugin>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.12.4</version>
-
-						<executions>
-							<execution>
-								<id>default-test</id>
-								<phase>pre-clean</phase>
-								<goals>
-									<goal>test</goal>
-								</goals>
-
-								<configuration>
-									<suiteXmlFiles>
-										<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-									</suiteXmlFiles>
-									<skipTests>false</skipTests>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					
-				</plugins>
-
-			</build>
-		</profile>
 
 	</profiles>
 </project>
