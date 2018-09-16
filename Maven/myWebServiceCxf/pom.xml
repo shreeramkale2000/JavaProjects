@@ -296,6 +296,45 @@
 			</build>
 		</profile>
 		
+		<profile>
+			<id>RunAppJettyQuick</id>
+
+			<build>
+				<defaultGoal>clean compile</defaultGoal>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>9.2.11.v20150529</version>
+
+						<executions>
+							
+							<execution>
+								<id>run-jetty</id>
+								<phase>compile</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+
+								<configuration>
+									<webApp>
+										<contextPath>/myWebServiceCxfSecure</contextPath>
+									</webApp>
+									<httpConnector>
+										<port>8086</port>
+									</httpConnector>
+								</configuration>
+							</execution>
+						</executions>
+
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+		
 	</profiles>
 
 </project>
