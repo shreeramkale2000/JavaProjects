@@ -19,7 +19,7 @@ public class EdgeTest {
 	public void beforeTest() throws InterruptedException {
 		System.setProperty("webdriver.edge.driver", "src/test/resources/MicrosoftWebDriver.exe");
 		driver = new EdgeDriver();
-		Thread.sleep(10000);
+		//Thread.sleep(10000);
 	}
 
 	@AfterTest

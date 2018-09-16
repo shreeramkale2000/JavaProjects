@@ -304,7 +304,7 @@
 			<id>TestWeb</id>
 
 			<build>
-				<defaultGoal>validate</defaultGoal>
+				<defaultGoal>pre-clean</defaultGoal>
 
 				<plugins>
 					
@@ -315,7 +315,7 @@
 						<executions>
 							<execution>
 								<id>default-test</id>
-								<phase>validate</phase>
+								<phase>pre-clean</phase>
 								<goals>
 									<goal>test</goal>
 								</goals>
