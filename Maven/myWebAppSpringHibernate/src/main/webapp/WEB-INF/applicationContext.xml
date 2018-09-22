@@ -24,10 +24,10 @@
 		
 	</http>
 	
-	<beans:bean id="customAuthenticationProvider" class="org.ritvik.common.CustomAuthenticationProvider" depends-on="logger"/>
+	<beans:bean id="customAuthenticationProvider" class="org.ritvik.common.CustomAuthenticationProvider"/>
 
 	<authentication-manager>
-		<authentication-provider ref="customAuthenticationProvider"/>
+		<authentication-provider ref="customAuthenticationProvider" />
 	</authentication-manager>
 	
 	<beans:bean id="logger" class="org.apache.log4j.Logger" factory-method="getLogger">

@@ -7,6 +7,8 @@ import org.ritvik.model.Employee;
 import org.ritvik.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,9 @@ public class HomeController {
 	private EmployeeService employeeService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String printHello(ModelMap model, Principal principal) {
-		logger.debug("User Logged - " + principal.getName());
+	public String printHello(ModelMap model, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		logger.debug("User Logged - " + userDetails.getUsername());
 		
 		Employee emp = new Employee();
 		emp.setName("Meenal");
