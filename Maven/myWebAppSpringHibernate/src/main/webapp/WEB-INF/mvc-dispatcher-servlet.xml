@@ -16,12 +16,6 @@
 			
 	<context:component-scan base-package="org.ritvik" scoped-proxy="no" />
 	
-	<context:annotation-config />
-	
-	<mvc:annotation-driven />
-	
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
 	<context:property-placeholder location="classpath:app.properties" order="1" ignore-resource-not-found="true" />
 	
 	<jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" />
@@ -42,7 +36,11 @@
 	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 	<bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	
+	<mvc:annotation-driven />
 	
 </beans>
