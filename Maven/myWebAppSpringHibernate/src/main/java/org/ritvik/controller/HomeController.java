@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/TestControllerModel")
-public class TestControllerModel {
+@RequestMapping("/HomeController")
+public class HomeController {
 	
 	@Autowired
 	private Logger logger;
@@ -20,14 +20,14 @@ public class TestControllerModel {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String printHello(ModelMap model) {
-		logger.debug("TestControllerModel called...");
+		logger.debug("HomeController called...");
 		
 		Employee emp = new Employee();
 		emp.setName("Meenal");
 		Integer i = employeeService.saveEmployee(emp);
 		logger.debug("Emp Save" + i);
 		
-		return "/index.htm";
+		return "/welcome.htm";
 	}
 	
 }
