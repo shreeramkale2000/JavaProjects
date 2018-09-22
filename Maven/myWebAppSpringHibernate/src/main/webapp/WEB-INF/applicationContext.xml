@@ -20,6 +20,12 @@
 		
 		<logout logout-url="/mvc/j_logout" logout-success-url="/nosession.htm"/>
 		
+		<headers>
+			<cache-control/>
+			<frame-options policy="DENY"/>
+			<xss-protection/>
+		</headers>
+		
 		<csrf disabled="true"/>
 		
 	</http>
