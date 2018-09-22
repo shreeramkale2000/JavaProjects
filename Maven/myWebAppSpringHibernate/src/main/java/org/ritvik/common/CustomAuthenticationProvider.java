@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
@@ -19,13 +18,22 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		String Key = null;
+		String[] values = null;
+		CustomUser customUser = null;
+		List<GrantedAuthority> authorities = null;
 		UsernamePasswordAuthenticationToken token = null;
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		try {
-			logger.info("Key Value - " + authentication.getName());
+			Key = authentication.getName();
+			logger.info("Key Value - " + Key);
+			values = Key.split(",");
 			
-			if (authentication.getName().contains("ritvik")) {
-				token = new UsernamePasswordAuthenticationToken(new User(authentication.getName(), "", authorities), authentication.getCredentials(), new ArrayList<>());
+			if (values.length >= 3) {
+				authorities = new ArrayList<GrantedAuthority>();
+				customUser = new CustomUser(values[0], "", authorities);
+				customUser.setFirstName(values[1]);
+				customUser.setLastName(values[2]);
+				token = new UsernamePasswordAuthenticationToken(customUser, "", authorities);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
