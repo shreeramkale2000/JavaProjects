@@ -1,5 +1,7 @@
 package org.ritvik.controller;
 
+import java.security.Principal;
+
 import org.apache.log4j.Logger;
 import org.ritvik.model.Employee;
 import org.ritvik.service.EmployeeService;
@@ -19,13 +21,13 @@ public class HomeController {
 	private EmployeeService employeeService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String printHello(ModelMap model) {
-		logger.debug("HomeController called...");
+	public String printHello(ModelMap model, Principal principal) {
+		logger.debug("User Logged - " + principal.getName());
 		
 		Employee emp = new Employee();
 		emp.setName("Meenal");
 		Integer i = employeeService.saveEmployee(emp);
-		logger.debug("Emp Save" + i);
+		logger.debug("Employee Saved " + i);
 		
 		return "/welcome.htm";
 	}

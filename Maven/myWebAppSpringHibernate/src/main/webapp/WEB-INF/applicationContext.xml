@@ -8,13 +8,13 @@
 
 	<http use-expressions="true">
 		
-		<intercept-url pattern="/mvc/HomeController" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/mvc/HomeController" access="hasRole('ROLE_SSO')" />
 		
 		<form-login login-page="/nosession.htm" login-processing-url="/mvc/j_login" 
 			default-target-url="/mvc/HomeController" authentication-failure-url="/loginfailed.htm" 
 			username-parameter="username" password-parameter="password"/>
 		
-		<logout logout-url="/mvc/j_logout" />
+		<logout logout-url="/mvc/j_logout" logout-success-url="/nosession.htm"/>
 		
 		<csrf disabled="true"/>
 		
@@ -26,7 +26,7 @@
 		<authentication-provider>
 			<password-encoder ref="encoder" />
 			<user-service>
-				<user name="ritvik" password="123456" authorities="ROLE_USER" />
+				<user name="ritvik" password="123456" authorities="ROLE_SSO" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
