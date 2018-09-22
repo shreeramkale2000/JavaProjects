@@ -24,10 +24,6 @@
 	
 	<context:property-placeholder location="classpath:app.properties" order="1" ignore-resource-not-found="true" />
 	
-	<bean id="logger" class="org.apache.log4j.Logger" factory-method="getLogger">
-		<constructor-arg value="org.ritvik.processLog" />
-	</bean>
-	
 	<jee:jndi-lookup id="dataSource" jndi-name="${db.jndi.name}" resource-ref="true" />
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">

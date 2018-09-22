@@ -12,7 +12,7 @@
 		
 		<form-login login-page="/nosession.htm" login-processing-url="/mvc/j_login" 
 			default-target-url="/mvc/HomeController" authentication-failure-url="/loginfailed.htm" 
-			username-parameter="username"/>
+			username-parameter="Key"/>
 		
 		<logout logout-url="/mvc/j_logout" logout-success-url="/nosession.htm"/>
 		
@@ -25,5 +25,9 @@
 	<authentication-manager>
 		<authentication-provider ref="customAuthenticationProvider"/>
 	</authentication-manager>
+	
+	<beans:bean id="logger" class="org.apache.log4j.Logger" factory-method="getLogger">
+		<beans:constructor-arg value="org.ritvik.processLog" />
+	</beans:bean>
 
 </beans:beans>
