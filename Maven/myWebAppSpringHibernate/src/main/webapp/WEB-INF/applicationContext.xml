@@ -8,11 +8,11 @@
 
 	<http use-expressions="true">
 		
-		<intercept-url pattern="/mvc/HomeController" access="hasRole('ROLE_SSO')" />
+		<intercept-url pattern="/mvc/HomeController" access="isAuthenticated()" />
 		
 		<form-login login-page="/nosession.htm" login-processing-url="/mvc/j_login" 
 			default-target-url="/mvc/HomeController" authentication-failure-url="/loginfailed.htm" 
-			username-parameter="username" password-parameter="password"/>
+			username-parameter="username"/>
 		
 		<logout logout-url="/mvc/j_logout" logout-success-url="/nosession.htm"/>
 		
@@ -20,15 +20,10 @@
 		
 	</http>
 	
-	<beans:bean id="encoder" class="org.ritvik.common.MyPasswordEncoder"/>
+	<beans:bean id="customAuthenticationProvider" class="org.ritvik.common.CustomAuthenticationProvider" />
 
 	<authentication-manager>
-		<authentication-provider>
-			<password-encoder ref="encoder" />
-			<user-service>
-				<user name="ritvik" password="123456" authorities="ROLE_SSO" />
-			</user-service>
-		</authentication-provider>
+		<authentication-provider ref="customAuthenticationProvider"/>
 	</authentication-manager>
 
 </beans:beans>
