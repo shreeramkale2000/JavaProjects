@@ -14,11 +14,11 @@
 		
 		<intercept-url pattern="/mvc/HomeController" access="isAuthenticated()" />
 		
-		<form-login login-page="/nosession.htm" login-processing-url="/mvc/j_login" 
+		<form-login login-page="/nosession.htm" login-processing-url="/mvc/login" 
 			default-target-url="/mvc/HomeController" authentication-failure-url="/loginfailed.htm" 
 			username-parameter="Key"/>
 		
-		<logout logout-url="/mvc/j_logout" logout-success-url="/nosession.htm"/>
+		<logout logout-url="/mvc/logout" logout-success-url="/nosession.htm"/>
 		
 		<headers>
 			<cache-control/>

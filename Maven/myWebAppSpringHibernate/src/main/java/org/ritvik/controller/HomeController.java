@@ -23,7 +23,7 @@ public class HomeController {
 	private EmployeeService employeeService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String printHello(ModelMap model, Authentication authentication) {
+	public String processRequest(ModelMap model, Authentication authentication) {
 		CustomUser userDetails = (CustomUser) authentication.getPrincipal();
 		logger.debug("User Logged - " + userDetails.getUsername());
 		logger.debug("User First Name - " + userDetails.getFirstName());
