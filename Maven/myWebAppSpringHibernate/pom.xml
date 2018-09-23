@@ -240,7 +240,7 @@
 			</properties>
 
 			<build>
-				<defaultGoal>clean package</defaultGoal>
+				<defaultGoal>clean package jetty:run</defaultGoal>
 
 				<plugins>
 					<plugin>
@@ -257,48 +257,15 @@
 							</dependency>
 						</dependencies>
 
-						<executions>
-							<execution>
-								<id>stop-jetty</id>
-								<phase>pre-clean</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-
-								<configuration>
-									<stopPort>8060</stopPort>
-									<stopKey>foo</stopKey>
-									<stopWait>10</stopWait>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>run-jetty</id>
-								<phase>package</phase>
-								<goals>
-									<goal>run-war</goal>
-								</goals>
-
-								<configuration>
-									<stopPort>8060</stopPort>
-									<stopKey>foo</stopKey>
-									<war>${project.build.directory}/${project.build.finalName}.war</war>
-									<webApp>
-										<contextPath>/myWebApp</contextPath>
-									</webApp>
-									<jettyConfig>${project.basedir}/src/main/config/jetty-config.xml</jettyConfig>
-									<scanIntervalSeconds>10</scanIntervalSeconds>
-									<systemProperties>
-										<systemProperty>
-											<key>dummy</key>
-											<value>test</value>
-										</systemProperty>
-									</systemProperties>
-								</configuration>
-							</execution>
-
-						</executions>
-
+						<configuration>
+							<war>${project.build.directory}/${project.build.finalName}.war</war>
+							<webApp>
+								<contextPath>/myWebApp</contextPath>
+							</webApp>
+							<jettyConfig>${project.basedir}/src/main/config/jetty-config.xml</jettyConfig>
+							<scanIntervalSeconds>10</scanIntervalSeconds>
+						</configuration>
+						
 					</plugin>
 					
 				</plugins>

@@ -6,3 +6,6 @@ Profiles
 7. BuildAppForUAT - Prepares War File for UAT Testing using uat resources. Also Deploys to UAT Jboss for Testing.
 
 Note - If Local Jboss Home is not Provided then Fresh Jboss will be Downloaded in target directory. This Jboss will be deleted and reconfigured on every Start.
+
+Jetty Debug - Add below JVM Args
+-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000

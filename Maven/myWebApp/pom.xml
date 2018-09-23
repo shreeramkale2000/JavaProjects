@@ -417,6 +417,10 @@
 
 		<profile>
 			<id>RunAppJetty</id>
+			
+			<properties>
+				<jetty.version>9.4.9.v20180320</jetty.version>
+			</properties>
 
 			<build>
 				<defaultGoal>clean</defaultGoal>
@@ -426,7 +430,7 @@
 					<plugin>
 						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
-						<version>9.2.11.v20150529</version>
+						<version>${jetty.version}</version>
 						
 						<dependencies>
 							
@@ -448,7 +452,7 @@
 								</goals>
 
 								<configuration>
-									<stopPort>8186</stopPort>
+									<stopPort>8060</stopPort>
 									<stopKey>secret</stopKey>
 									<stopWait>10</stopWait>
 								</configuration>
@@ -462,7 +466,7 @@
 								</goals>
 
 								<configuration>
-									<stopPort>8186</stopPort>
+									<stopPort>8060</stopPort>
 									<stopKey>secret</stopKey>
 									<war>${project.build.directory}/${project.build.finalName}.war</war>
 									<webApp>
@@ -470,6 +474,12 @@
 									</webApp>
 									<jettyConfig>${project.basedir}/src/main/config/jetty-config.xml</jettyConfig>
 									<scanIntervalSeconds>10</scanIntervalSeconds>
+									<systemProperties>
+										<systemProperty>
+											<key>dummy</key>
+											<value>test</value>
+										</systemProperty>
+									</systemProperties>
 								</configuration>
 							</execution>
 						</executions>
