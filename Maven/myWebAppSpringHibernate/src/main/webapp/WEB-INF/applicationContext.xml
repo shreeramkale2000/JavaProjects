@@ -13,12 +13,14 @@
 	<http use-expressions="true">
 		
 		<intercept-url pattern="/mvc/HomeController" access="isAuthenticated()" />
+		<intercept-url pattern="/mvc/WorkController" access="isAuthenticated()" />
 		
-		<form-login login-page="/nosession.htm" login-processing-url="/mvc/login" 
-			default-target-url="/mvc/HomeController" authentication-failure-url="/loginfailed.htm" 
-			username-parameter="Key"/>
+		<form-login login-page="/nosession.htm" login-processing-url="/mvc/login" username-parameter="Key"
+			default-target-url="/mvc/HomeController" authentication-failure-url="/loginfailed.htm" />
 		
-		<logout logout-url="/mvc/logout" logout-success-url="/nosession.htm"/>
+		<!--<custom-filter ref="customFilter" before="SESSION_MANAGEMENT_FILTER" />-->
+		
+		<logout logout-url="/mvc/logout" logout-success-url="/sessionexpired.htm"/>
 		
 		<headers>
 			<cache-control/>
@@ -26,9 +28,15 @@
 			<xss-protection/>
 		</headers>
 		
+		<session-management invalid-session-url="/nosession.htm">
+			<concurrency-control expired-url="/nosession.htm"/>
+		</session-management>
+		
 		<csrf disabled="true"/>
 		
 	</http>
+	
+	<beans:bean id="customFilter" class="org.ritvik.common.CustomFilter"/>
 	
 	<beans:bean id="customAuthenticationProvider" class="org.ritvik.common.CustomAuthenticationProvider"/>
 
