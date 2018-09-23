@@ -28,7 +28,7 @@
 			<xss-protection/>
 		</headers>
 		
-		<session-management invalid-session-url="/nosession.htm">
+		<session-management>
 			<concurrency-control expired-url="/sessionexpired.htm"/>
 		</session-management>
 		
