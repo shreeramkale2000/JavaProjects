@@ -26,8 +26,8 @@ public class CustomFilter extends GenericFilterBean {
 		HttpSession session = httpServletRequest.getSession(false);
 		
 		if (session == null) {
-			logger.info("Session Missing for URI " + httpServletRequest.getRequestURI());
 			if (httpServletRequest.getRequestURI().contains("WorkController")) {
+				logger.info("Session Missing for URI " + httpServletRequest.getRequestURI());
 				httpServletResponse.sendRedirect("../sessionexpired2.htm");
 			} else {
 				chain.doFilter(request, response);

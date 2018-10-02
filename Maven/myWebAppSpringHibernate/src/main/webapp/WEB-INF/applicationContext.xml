@@ -12,6 +12,7 @@
 	
 	<http use-expressions="true" pattern="/mvc/*">
 		
+		<intercept-url pattern="/mvc/OpenController" access="isAnonymous()" />
 		<intercept-url pattern="/mvc/HomeController" access="isAuthenticated()" />
 		<intercept-url pattern="/mvc/WorkController" access="isAuthenticated()" />
 		
@@ -20,7 +21,7 @@
 		
 		<custom-filter ref="customFilter" before="SESSION_MANAGEMENT_FILTER" />
 		
-		<logout logout-url="/mvc/logout" logout-success-url="/sessionexpired.htm" />
+		<logout logout-url="/mvc/logout" logout-success-url="/nosession.htm" />
 		
 		<headers>
 			<cache-control/>
