@@ -24,7 +24,7 @@
 
     <New id="httpConfig" class="org.eclipse.jetty.server.HttpConfiguration">
         <Set name="secureScheme">https</Set>
-        <Set name="securePort">8084</Set>
+        <Set name="securePort">8094</Set>
     </New>
 
     <New id="httpsConfig" class="org.eclipse.jetty.server.HttpConfiguration">
@@ -51,7 +51,7 @@
             </Array>
         </Arg>
 
-        <Set name="port">8086</Set>
+        <Set name="port">8096</Set>
     </New>
 
     <New id="sslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
@@ -85,7 +85,7 @@
             </Array>
         </Arg>
 
-        <Set name="port">8084</Set>
+        <Set name="port">8094</Set>
     </New>
 
     <Call name="setConnectors">
