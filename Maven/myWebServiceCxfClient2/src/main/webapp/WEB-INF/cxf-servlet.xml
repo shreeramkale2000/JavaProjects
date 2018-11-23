@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xmlns:sec="http://cxf.apache.org/configuration/security" 
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+			http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+			http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+			http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd">
+
+	<context:component-scan base-package="org.ritvik.cxf" scoped-proxy="no" />
+	
+	<jaxrs:server id="cxfRestClient" address="/CxfRestClient">
+		<jaxrs:serviceBeans>
+			<bean class="org.ritvik.cxf.CxfRestClient" />
+		</jaxrs:serviceBeans>
+	</jaxrs:server>
+	
+	<context:property-placeholder location="classpath:Application.properties" order="1" ignore-resource-not-found="true" />
+
+	<jaxws:client name="{http://ritvik.org/wsdl/calculator}CalculatorServicePort" 
+		createdFromAPI="false" address="${endpoint}">
+		
+		<jaxws:features>
+			<cxf:logging/>
+		</jaxws:features>
+		
+	</jaxws:client>
+	
+	<bean name="fakeX509TrustManager" class="org.ritvik.common.FakeX509TrustManager" />
+	
+	<http:conduit name="{http://ritvik.org/wsdl/calculator}CalculatorServicePort.http-conduit" >
+		
+		<!--<http:client ProxyServer="${proxySvr}" ProxyServerPort="${proxyPt}" />-->
+		
+		<http:tlsClientParameters disableCNCheck="true" >
+			<sec:trustManagers ref="fakeX509TrustManager" />
+		</http:tlsClientParameters>
+		
+	</http:conduit>
+
+</beans>
