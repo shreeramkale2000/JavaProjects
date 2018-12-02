@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.ritvik.ejb</groupId>
-	<artifactId>myEjbModule</artifactId>
+	<artifactId>myEjbTester</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>myEjbModule</name>
-	<description>Sample EJB Module</description>
+	<name>myEjbTester</name>
+	<description>Sample EJB Tester</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,11 +30,23 @@
 		    <scope>provided</scope>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.jboss</groupId>
+		    <artifactId>jboss-ejb-client</artifactId>
+		    <version>4.0.12.Final</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.ritvik.ejb</groupId>
+			<artifactId>myEjbModule</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<!-- maven help:effective-pom -->
 	<build>
-		<finalName>myEjbModule</finalName>
+		<finalName>myEjbTester</finalName>
 
 		<plugins>
 			<plugin>
@@ -137,7 +149,7 @@
 
 						<configuration>
 							<createChecksum>true</createChecksum>
-							<skip>false</skip>
+							<skip>true</skip>
 						</configuration>
 
 					</execution>
